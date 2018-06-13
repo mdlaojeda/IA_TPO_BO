@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: BackOffice_G05_EJBClient.jar
-

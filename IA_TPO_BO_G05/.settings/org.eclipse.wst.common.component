@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="IA_TPO_BO_G05">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="IA_TPO_BO_G05_EJB.jar" deploy-path="/" handle="module:/resource/IA_TPO_BO_G05_EJB/IA_TPO_BO_G05_EJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="IA_TPO_BO_G05_EJBClient.jar" deploy-path="/" handle="module:/resource/IA_TPO_BO_G05_EJBClient/IA_TPO_BO_G05_EJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
