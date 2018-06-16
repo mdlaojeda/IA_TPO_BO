@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="IA_TPO_BO_G05">
+    <wb-module deploy-name="IA_TPO_BO_G05_EAR">
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="IA_TPO_BO_G05_EJB.jar" deploy-path="/" handle="module:/resource/IA_TPO_BO_G05_EJB/IA_TPO_BO_G05_EJB">
             <dependent-object/>

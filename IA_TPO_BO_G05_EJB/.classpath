@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="ejbModule"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_171">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -12,22 +12,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/javax.servlet.jsp.jstl-api-1.2.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/jstl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/jtds-1.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/slf4j-simple-1.5.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Diego/eclipse-workspace/IA_TPO_BO_G05_EJB/lib/standard.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
