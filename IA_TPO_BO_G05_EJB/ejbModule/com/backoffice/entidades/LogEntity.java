@@ -1,5 +1,6 @@
 package com.backoffice.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,26 +9,39 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.backoffice.dto.LogDTO;
 
 @Entity
 @Table(name = "Logs")
-public class LogEntity {
+public class LogEntity implements Serializable {
 	
+	private static final long serialVersionUID = -240934939121263588L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "nroLog")
 	private Integer nroLog;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha")
 	private Date fecha;
 	
-	@Column(name = "nroModulo")
-	private Integer nroModulo;
+	@Column(name = "modulo")
+	private String modulo;
 	
-	@Column(name = "nroAccion")
-	private Integer nroAccion;
+	@Column(name = "accion")
+	private String accion;
 	
 	public LogEntity() {}
+	
+	public LogEntity(LogDTO lDTO) {
+		this.fecha = lDTO.getFecha();
+		this.modulo = lDTO.getModulo();
+		this.accion = lDTO.getAccion();
+	}
 
 	public int getNroLog() {
 		return nroLog;
@@ -45,19 +59,19 @@ public class LogEntity {
 		this.fecha = fecha;
 	}
 
-	public int getNroModulo() {
-		return nroModulo;
+	public String getModulo() {
+		return modulo;
 	}
 
-	public void setNroModulo(int nroModulo) {
-		this.nroModulo = Integer.valueOf(nroModulo);
+	public void setModulo(String modulo) {
+		this.modulo = modulo;
 	}
 
-	public int getNroAccion() {
-		return nroAccion;
+	public String getAccion() {
+		return accion;
 	}
 
-	public void setNroAccion(int nroAccion) {
-		this.nroAccion = Integer.valueOf(nroAccion);
+	public void setAccion(String accion) {
+		this.accion = accion;
 	}
 }

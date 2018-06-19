@@ -1,11 +1,15 @@
 package com.backoffice.fachada;
 
 import javax.ejb.Remote;
-import java.util.List;
+
+import com.backoffice.dto.SolicitudDTO;
 
 @Remote
 public interface FachadaBeanRemote {
-	public int nuevaSolicitud(int nroUsuario, int nroEstablecimiento, int nroAgencia, int tiposolicitud, int estado);
+	
+	public SolicitudDTO crearSolicitud(SolicitudDTO sDTO);
+	public SolicitudDTO crearSolicitud(int test);
+	public boolean crearLog();
 	
 //	public List<Solicitud> verSolicitudes();
 //	public Solicitud verDetalleSolicitud(int solicitudID);

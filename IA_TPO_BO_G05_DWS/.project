@@ -3,6 +3,7 @@
 	<name>IA_TPO_BO_G05_DWS</name>
 	<comment></comment>
 	<projects>
+		<project>IA_TPO_BO_G05_EJBClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

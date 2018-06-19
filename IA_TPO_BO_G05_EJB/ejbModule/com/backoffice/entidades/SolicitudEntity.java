@@ -1,47 +1,64 @@
 package com.backoffice.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.enums.Estado;
 import com.backoffice.enums.TipoSolicitud;
 
 @Entity
 @Table(name = "Solicitudes")
-public class SolicitudEntity {
+public class SolicitudEntity implements Serializable {
+
+	private static final long serialVersionUID = 4536565580531094021L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "nroSolicitud")
+	@Column(name = "nroSolicitud", nullable = false)
 	private Integer nroSolicitud;
+	
+	@Column(name = "descripcion")
+	private String descripcion;
 
-	@Column(name = "nroUsuario")
-	private Integer nroUsuario;
-
-	@Column(name = "nroEstablecimiento")
-	private Integer nroEstablecimiento;
-
-	@Column(name = "nroAgencia")
-	private Integer nroAgencia;
-
-	@Column(name = "tipo")
+    @Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo", nullable = false)
 	private TipoSolicitud tipo;
 
-	@Column(name = "estado")
+    @Enumerated(EnumType.ORDINAL)
+	@Column(name = "estado", nullable = false)
 	private Estado estado;
 	
 	@Column(name = "direccion")
 	private String direccion;
 	
-	@Column(name = "fotoUrl")
-	private String fotoUrl;
-
-	public SolicitudEntity() {
-	}
+	public SolicitudEntity() {};
+	
+	public SolicitudEntity(SolicitudDTO sDTO) {
+		this.descripcion = sDTO.getDescripcion();
+		this.tipo = sDTO.getTipo();
+		if(sDTO.getEstado() != null) {
+			this.estado = sDTO.getEstado();
+		} else {
+			this.estado = Estado.PENDIENTE;
+		} 
+		this.direccion = sDTO.getDireccion();
+	};
+	
+	public SolicitudEntity(String descripcion, TipoSolicitud tipo, Estado estado, String direccion) {		
+		this.descripcion = descripcion;
+		this.tipo = tipo;
+		this.estado = estado;
+		this.direccion = direccion;
+	};
 
 	public int getNroSolicitud() {
 		return nroSolicitud;
@@ -50,31 +67,15 @@ public class SolicitudEntity {
 	public void setNroSolicitud(int nroSolicitud) {
 		this.nroSolicitud = Integer.valueOf(nroSolicitud);
 	}
-
-	public int getNroUsuario() {
-		return nroUsuario;
+	
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setNroUsuario(int idUsuario) {
-		this.nroUsuario =  Integer.valueOf(idUsuario);
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
-
-	public int getNroEstablecimiento() {
-		return nroEstablecimiento;
-	}
-
-	public void setNroEstablecimiento(int nroEstablecimiento) {
-		this.nroEstablecimiento =  Integer.valueOf(nroEstablecimiento);
-	}
-
-	public int getNroAgencia() {
-		return nroAgencia;
-	}
-
-	public void setNroAgencia(int nroAgencia) {
-		this.nroAgencia =  Integer.valueOf(nroAgencia);
-	}
-
+	
 	public TipoSolicitud getTipo() {
 		return tipo;
 	}
@@ -97,14 +98,6 @@ public class SolicitudEntity {
 
 	public void setDireccion(String dir) {
 		this.direccion = dir;
-	}
-	
-	public String getFotoURL() {
-		return fotoUrl;
-	}
-
-	public void setEstado(String foto) {
-		this.fotoUrl = foto;
 	}
 
 	public void Aprobar() {
