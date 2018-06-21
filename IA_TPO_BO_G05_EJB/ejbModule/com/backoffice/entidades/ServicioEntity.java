@@ -5,9 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.backoffice.enums.TipoServicioENUM;
 
 @Entity
 @Table(name = "Servicios")
@@ -18,29 +19,29 @@ public class ServicioEntity {
 	@Column(name = "nroServicio")
 	private Integer nroServicio;
 	
-	@Column(name = "nroTipoServicio")
-	private Integer nroTipoServicio;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "nroTipoServicio", nullable = false)
+	private TipoServicioEntity tipoServicio;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
 	
 	public ServicioEntity() {}
 
-	public int getNroServicio() {
+	public Integer getNroServicio() {
 		return nroServicio;
 	}
 
-	public void setNroServicio(int nroServicio) {
-		this.nroServicio = Integer.valueOf(nroServicio);
+	public void setNroServicio(Integer nroServicio) {
+		this.nroServicio = nroServicio;
 	}
 	
-	public int getNroTipoServicio() {
-		return nroTipoServicio;
-	}
-
-	public void setNroTipoServicio(int nroTipoServicio) {
-		this.nroTipoServicio = nroTipoServicio;
-	}
+    public TipoServicioEntity getTipoServicio() {
+        return tipoServicio;
+    }
+    public void setTipoServicio(TipoServicioEntity tipoServicio) {
+        this.tipoServicio = tipoServicio;
+    }
 
 	public String getDescripcion() {
 		return descripcion;

@@ -1,21 +1,23 @@
 package com.backoffice.fachada;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
+import com.backoffice.dto.LogDTO;
+import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.SolicitudDTO;
+import com.backoffice.dto.TipoServicioDTO;
 
 @Local
 public interface FachadaBeanLocal {
+	//-------- Solicitudes --------//
+	public String enviarSolicitud(SolicitudDTO sDTO);
 	
-	public SolicitudDTO crearSolicitud(SolicitudDTO sDTO);
-	public SolicitudDTO crearSolicitud(int test);
-	public boolean crearLog();
+	//-------- Servicios --------//
+	public List<ServicioDTO> obtenerServicios();
+	public List<TipoServicioDTO> obtenerTiposServicio();
 	
-//	public List<Solicitud> verSolicitudes();
-//	public Solicitud verDetalleSolicitud(int solicitudID);
-//	public void aprobarSolicitud(int solicitudID);
-//	public void desaprobarSolicitud(int solicitudID);
-	
-	//public void enviarSolicitud(SolicitudDTO sol);
-	//public void escribirLog(LogDTO log);	public int nuevaSolicitud(int nroUsuario, int nroEstablecimiento, int nroAgencia, int tiposolicitud, int estado);
+	//-------- Logs --------//
+	public String enviarLog(LogDTO lDTO);
 }

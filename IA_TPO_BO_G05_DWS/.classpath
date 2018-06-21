@@ -13,7 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/IA_TPO_BO_G05_EJBClient"/>
 	<classpathentry kind="lib" path="/Users/diegopablos/eclipse-workspace/IA_TPO_BO/IA_TPO_BO_G05_DWS/lib/jackson-core-2.9.6.jar"/>
 	<classpathentry kind="lib" path="/Users/diegopablos/eclipse-workspace/IA_TPO_BO/IA_TPO_BO_G05_DWS/lib/jackson-annotations-2.9.6.jar"/>
 	<classpathentry kind="lib" path="/Users/diegopablos/eclipse-workspace/IA_TPO_BO/IA_TPO_BO_G05_DWS/lib/jackson-databind-2.9.6.jar"/>

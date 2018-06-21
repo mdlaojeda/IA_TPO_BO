@@ -21,12 +21,12 @@ public class TipoServicioEntity {
 	
 	public TipoServicioEntity() {}
 
-	public int getNroTipoServicio() {
+	public Integer getNroTipoServicio() {
 		return nroTipoServicio;
 	}
 
-	public void setNroTipoServicio(int nroTipoServicio) {
-		this.nroTipoServicio = Integer.valueOf(nroTipoServicio);
+	public void setNroTipoServicio(Integer nroTipoServicio) {
+		this.nroTipoServicio = nroTipoServicio;
 	}
 
 	public String getDescripcion() {

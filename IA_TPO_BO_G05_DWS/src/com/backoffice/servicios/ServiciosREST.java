@@ -1,142 +1,102 @@
 package com.backoffice.servicios;
 
 import javax.ejb.EJB;
-import javax.json.Json;
+import javax.ejb.Stateless;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.backoffice.dto.LogDTO;
+import com.backoffice.dto.*;
 import com.backoffice.fachada.FachadaBeanRemote;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import sun.rmi.runtime.Log;
-
-//import com.backoffice.
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.util.List;
 
-@Path("/rest")
+@Stateless
+@Path("/")
 public class ServiciosREST {
     
 	@EJB
     private FachadaBeanRemote fachadaBean;
     
-	@POST
-	@Path("/enviarsolicitud")
+	//--------- SOLICITUDES ---------//
+	@PUT
+	@Path("/solicitudes")
+	@Consumes({ "application/json" })
 	@Produces({ "text/plain" })
-	public String EnviarSolicitud(String test) {
-		return "Test: " + test;
-	}
-	
-	@GET
-	@Path("/servicios")
-	@Produces("application/json")
-	public Response getServicios() {
+	public String enviarSolicitud(String solicitudReq) {
 		
-		//String json = "{ \"servicios\": [{ \"id\": 1, \"descripcion\": \"test 1\" }, { \"id\": 2, \"descripcion\": \"test 1\" } ]}";
-		
-		String json = "[\n" + 
-				"     {\n" + 
-				"       \"id\": 1,\n" + 
-				"       \"nombre\": \"Transporte\",\n" + 
-				"       \"servicios\": [\n" + 
-				"         { \"id\": 23, \"nombre\": \"servicio de traslado\"},\n" + 
-				"         { \"id\": 24, \"nombre\": \"Alquiler de auto\"}\n" + 
-				"       ]\n" + 
-				"     },\n" + 
-				"     {\n" + 
-				"       \"id\": 2,\n" + 
-				"       \"nombre\": \"servicio de limpieza\",\n" + 
-				"       \"servicios\": [\n" + 
-				"         { \"id\": 45, \"nombre\": \"servicio diario de limpieza\" },\n" + 
-				"         { \"id\": 46, \"nombre\": \"servicio de planchado\" },\n" + 
-				"         { \"id\": 47, \"nombre\": \"servicio de lavanderia\" }\n" + 
-				"       ]\n" + 
-				"     }\n" + 
-				"   ]\n";
-		
-		return Response.ok(json, MediaType.APPLICATION_JSON).build();
-	}
-
-	@GET
-	@Path("saludo/{nombre}")
-	@Produces({ "text/plain" })
-	public String saludoGET(@PathParam("nombre") String nombre) {
-		fachadaBean.crearLog();
-		return "Hola " + nombre;
-	}
-
-	@POST
-	@Path("/saludo")
-	@Produces({ "text/plain" })
-	public String saludoPOST(String nombre) {
-		return "Hola " + nombre;
-	}
-	
-    @POST
-    @Path("/log")
-    @Consumes({ "application/json" })
-    @Produces({ "text/plain" })
-    public String crearSolicitud(String logreq) {
-    	/*
-    	 * {
-    	 * 	accion:
-    	 * modulo:
-    	 * fecha:
-    	 * }
-    	 * */
-    	//return "log creado";
-    	
-    	//fachadaBean.crearLog();
-    	
-    	LogDTO logdto = new LogDTO();
-    	
-    	// configure, if necessary:
+    	SolicitudDTO solicitudDTO = new SolicitudDTO();
     	ObjectMapper objectMapper = new ObjectMapper();
     	try {
-			logdto = objectMapper.readValue(logreq, LogDTO.class);
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			solicitudDTO = objectMapper.readValue(solicitudReq, SolicitudDTO.class);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-//
-//    	String carJson =
-//    	    "{ \"brand\" : \"Mercedes\", \"doors\" : 5 }";
-//
-//    	try {
-//    	    Car car = objectMapper.readValue(carJson, Car.class);
-//
-//    	    System.out.println("car brand = " + car.getBrand());
-//    	    System.out.println("car doors = " + car.getDoors());
-//    	} catch (IOException e) {
-//    	    e.printStackTrace();
-//    	}
-    	
-    	return logdto.getAccion() + "anduvo aparentemente";
+
+		return fachadaBean.enviarSolicitud(solicitudDTO);
+	}
+	
+	//--------- SERVICIOS ---------//
+    @GET
+    @Path("/servicios/all")
+    @Produces({ "application/json" })
+    public List<ServicioDTO> obtenerServicios() {
+    	return fachadaBean.obtenerServicios();
     }
     
-//    @POST
-//    @Path("/RegistrarLog")
-//    @Produces(APPLICATION_JSON)
-//    @Consumes(APPLICATION_JSON)
-//    public LogDTO crearSolicitud(LogDTO log) {
-//
-//        LogDTO dto = logBean.registrarLog(log);
-//        return dto;
-//    }
+    @SuppressWarnings("deprecation")
+	@GET
+    @Path("/servicios")
+    @Produces({ "application/json" })
+    public ArrayNode obtenerServiciosPorTipo() {
+    	
+    	List<ServicioDTO> servicios = fachadaBean.obtenerServicios();
+    	List<TipoServicioDTO> tiposServicio = fachadaBean.obtenerTiposServicio();
+
+    	ObjectMapper mapper = new ObjectMapper();
+    	ArrayNode arrayRespuesta = mapper.createArrayNode();
+    	
+        for (TipoServicioDTO tsDTO : tiposServicio) {
+        	ObjectNode tsObj = mapper.createObjectNode();
+        	ArrayNode serviciosNode = mapper.createArrayNode();
+        	
+        	tsObj.put("id", tsDTO.getNroTipoServicio());
+        	tsObj.put("nombre", tsDTO.getDescripcion());
+        	
+        	for (ServicioDTO sDTO : servicios) {
+        		if (sDTO.getTipoServicio().getNroTipoServicio() == tsDTO.getNroTipoServicio()) {
+        			ObjectNode sObj = mapper.createObjectNode();
+            		sObj.put("id", sDTO.getNroServicio());
+            		sObj.put("nombre", sDTO.getDescripcion());	
+                	serviciosNode.add(sObj);
+        		}
+        	}
+        	tsObj.put("servicios", serviciosNode);
+        	arrayRespuesta.add(tsObj);
+        }
+        
+    	return arrayRespuesta;
+    }
+	
+	
+	//--------- LOGS ---------//
+    @PUT
+    @Path("/logs")
+    @Consumes({ "application/json" })
+    @Produces({ "text/plain" })
+    public String enviarLog(String logreq) {
+    	
+    	LogDTO lDTO = new LogDTO();
+    	try {
+    		lDTO = new ObjectMapper().readValue(logreq, LogDTO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fachadaBean.enviarLog(lDTO);
+    }
 
 }

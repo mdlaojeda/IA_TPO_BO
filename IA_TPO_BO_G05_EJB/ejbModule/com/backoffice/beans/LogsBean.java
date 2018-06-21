@@ -1,5 +1,8 @@
 package com.backoffice.beans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,25 +16,26 @@ import com.backoffice.entidades.LogEntity;
  */
 @Stateless
 @LocalBean
-public class LogsBean implements LogsBeanRemote, LogsBeanLocal {
+public class LogsBean {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
 
-    public boolean crearLog(LogDTO logDTO) {
+	public String crearLog(LogDTO logDTO) {
 		try {
 			LogEntity entity = new LogEntity(logDTO);
-
 			em.persist(entity);
 			em.flush();
-
-			//return new LogDTO(entity.getNroLog(), entity.getFecha(), entity.getAccion(), entity.getModulo());
-			return true;
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("Log '");
+			stringBuilder.append(entity.getNroLog());
+			stringBuilder.append("' ingresado a las ");
+			stringBuilder.append(new SimpleDateFormat("dd/MM/yyyy, Ka").format(new Date()));
+			stringBuilder.append(".");
+			return stringBuilder.toString();
 		} catch (Exception e) {
-			System.out.println("EL ERROR ES: " + e.toString());
+			return "Error al ingresar el log: " + e.getMessage();
 		}
-		
-		return true;
 	}
 
 }

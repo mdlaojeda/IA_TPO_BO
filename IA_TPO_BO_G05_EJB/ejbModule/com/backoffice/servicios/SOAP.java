@@ -19,21 +19,16 @@ public class SOAP {
     
 	@EJB
     private SolicitudesBean solicitudesBean;
-    
-	@WebMethod
-	public String sayHello(String name) {
-		return "Hello " + name; 
-	}
 	
     @WebMethod
     public boolean estaAutorizado(
-    	   @WebParam(name="nroSolicitud") 
-    	   @XmlElement(required = true) Integer nroSolicitud) {
+    	   @WebParam(name="codEntidad") 
+    	   @XmlElement(required = true) String codEntidad) {
     	
     	SolicitudDTO dto = null;
     	
-    	if (nroSolicitud != null){
-    		dto = solicitudesBean.buscarPorNro(nroSolicitud);
+    	if (codEntidad != null){
+    		dto = solicitudesBean.buscarPorUUID(codEntidad);
     	}
     	
     	if(dto != null && dto.getEstado().equals(Estado.APROBADA)) {

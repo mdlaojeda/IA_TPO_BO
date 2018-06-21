@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.enums.Estado;
 import com.backoffice.enums.TipoSolicitud;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Solicitudes")
@@ -23,65 +24,86 @@ public class SolicitudEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "nroSolicitud", nullable = false)
-	private Integer nroSolicitud;
-	
-	@Column(name = "descripcion")
-	private String descripcion;
+	@Column(name = "idSolicitud", nullable = false)
+	private Integer idSolicitud;
 
-    @Enumerated(EnumType.ORDINAL)
+	@Column(name = "codEntidad", nullable = false, unique = true)
+	private String codEntidad;
+
+	@Column(name = "nombre")
+	private String nombre;
+
+	@Column(name = "direccion")
+	private String direccion;
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "estado", nullable = false)
+	private Estado estado;
+
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "tipo", nullable = false)
 	private TipoSolicitud tipo;
 
-    @Enumerated(EnumType.ORDINAL)
-	@Column(name = "estado", nullable = false)
-	private Estado estado;
-	
-	@Column(name = "direccion")
-	private String direccion;
-	
 	public SolicitudEntity() {};
-	
+
 	public SolicitudEntity(SolicitudDTO sDTO) {
-		this.descripcion = sDTO.getDescripcion();
-		this.tipo = sDTO.getTipo();
-		if(sDTO.getEstado() != null) {
+		this.codEntidad = UUID.randomUUID().toString();
+		this.nombre = sDTO.getNombre();
+		this.direccion = sDTO.getDireccion();
+		if (sDTO.getEstado() != null) {
 			this.estado = sDTO.getEstado();
 		} else {
 			this.estado = Estado.PENDIENTE;
-		} 
-		this.direccion = sDTO.getDireccion();
+		}
+		this.tipo = sDTO.getTipo();
 	};
-	
-	public SolicitudEntity(String descripcion, TipoSolicitud tipo, Estado estado, String direccion) {		
-		this.descripcion = descripcion;
-		this.tipo = tipo;
-		this.estado = estado;
+
+	public SolicitudEntity(String nombre, String direccion, Estado estado, TipoSolicitud tipoSolicitud) {
+		this.codEntidad = UUID.randomUUID().toString();
+		this.nombre = nombre;
 		this.direccion = direccion;
-	};
-
-	public int getNroSolicitud() {
-		return nroSolicitud;
+		this.estado = estado;
+		this.tipo = tipoSolicitud;
 	}
 
-	public void setNroSolicitud(int nroSolicitud) {
-		this.nroSolicitud = Integer.valueOf(nroSolicitud);
-	}
-	
-	public String getDescripcion() {
-		return descripcion;
+	public void Aprobar() {
+		this.setEstado(Estado.APROBADA);
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
-	public TipoSolicitud getTipo() {
-		return tipo;
+	public void Desaprobar() {
+		this.setEstado(Estado.DESAPROBADA);
 	}
 
-	public void setTipo(TipoSolicitud tipo) {
-		this.tipo = tipo;
+	public Integer getIdSolicitud() {
+		return idSolicitud;
+	}
+
+	public void setIdSolicitud(Integer idSolicitud) {
+		this.idSolicitud = idSolicitud;
+	}
+
+	public String getCodEntidad() {
+		return codEntidad;
+	}
+
+	public void setCodEntidad(String codEntidad) {
+		this.codEntidad = codEntidad;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
 	public Estado getEstado() {
@@ -91,21 +113,13 @@ public class SolicitudEntity implements Serializable {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
-	public String getDireccion() {
-		return direccion;
+
+	public TipoSolicitud getTipo() {
+		return tipo;
 	}
 
-	public void setDireccion(String dir) {
-		this.direccion = dir;
-	}
-
-	public void Aprobar() {
-		this.setEstado(Estado.APROBADA);
-	}
-
-	public void Desaprobar() {
-		this.setEstado(Estado.DESAPROBADA);
+	public void setTipo(TipoSolicitud tipo) {
+		this.tipo = tipo;
 	}
 
 }

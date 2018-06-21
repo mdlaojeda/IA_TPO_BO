@@ -2,6 +2,9 @@
     <wb-module deploy-name="IA_TPO_BO_G05_DWS">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="IA_TPO_BO_G05_EJBClient.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/IA_TPO_BO_G05_EJBClient/IA_TPO_BO_G05_EJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="IA_TPO_BO_G05_DWS"/>
         <property name="java-output-path" value="/IA_TPO_BO_G05_DWS/build/classes"/>
     </wb-module>
