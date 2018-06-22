@@ -20,4 +20,7 @@ public interface FachadaBeanLocal {
 	
 	//-------- Logs --------//
 	public String enviarLog(LogDTO lDTO);
+	
+	//-------- Utils --------//
+	public String reset();
 }

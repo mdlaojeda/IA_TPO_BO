@@ -1,6 +1,5 @@
 package com.backoffice.fachada;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -29,6 +28,9 @@ public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
 	@EJB
 	TiposServicioBean tiposServicioBean = new TiposServicioBean();
 	
+	@EJB
+	UtilsBean utilsBean = new UtilsBean();
+	
     public FachadaBean() {
         // TODO Auto-generated constructor stub
     }
@@ -41,18 +43,6 @@ public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
 	public List<SolicitudDTO> verSolicitudes() {
 		return solicitudesBean.getAll();
 	}
-    
-	//public SolicitudDTO verDetalleSolicitud(int solicitudID) {
-	//	return solicitudesBean.verDetalleSolicitud(solicitudID);
-	//}
-	//
-	//public void aprobarSolicitud(int solicitudID) {
-	//	solicitudesBean.aprobarSolicitud(solicitudID);
-	//}
-	//
-	//public void desaprobarSolicitud(int solicitudID) {
-	//	solicitudesBean.desaprobarSolicitud(solicitudID);
-	//}
 	    
     //-------- Servicios --------//
     public List<ServicioDTO> obtenerServicios() {
@@ -66,6 +56,11 @@ public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
     //-------- Logs --------//
 	public String enviarLog(LogDTO lDTO) {
 		return logsBean.crearLog(lDTO);
+	}
+	
+	//-------- Utils --------//
+	public String reset() {
+		return utilsBean.reset();
 	}
 
 }

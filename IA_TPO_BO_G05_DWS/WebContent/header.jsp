@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
 	<a class="navbar-brand d-flex align-items-center" href="#">
-		<i class="fas fa-hotel mr-2"></i> <span class="brand-text">Back Office Tools</span>
+		<i class="fas fa-hotel mr-2"></i> <span class="brand-text">Back Office</span>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"

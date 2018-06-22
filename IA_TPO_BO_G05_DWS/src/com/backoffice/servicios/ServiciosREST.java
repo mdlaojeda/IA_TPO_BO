@@ -96,5 +96,14 @@ public class ServiciosREST {
 		}
 		return fachadaBean.enviarLog(lDTO);
     }
-
+    
+    
+  //--------- UTILS ---------//
+    @PUT
+    @Path("/reset")
+    @Produces({ "text/plain" })
+    public String reset() {
+		return fachadaBean.reset();
+    }
+    
 }

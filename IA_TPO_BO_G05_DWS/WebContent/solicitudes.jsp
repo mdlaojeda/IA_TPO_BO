@@ -21,18 +21,16 @@
 				<%
 					List<SolicitudDTO> sDTOlist = (List<SolicitudDTO>) request.getAttribute("solicitudes");
 					SolicitudDTO aux;
-					String solicitudJSONstr = "";
 					ObjectMapper mapper = new ObjectMapper();
 					for (Iterator<SolicitudDTO> i = sDTOlist.iterator(); i.hasNext();) {
 						aux = i.next();
-						solicitudJSONstr = mapper.writeValueAsString(aux);
 				%>
 				<tr class="pedido-row">
 					<th scope="row"><%=aux.getIdSolicitud()%></th>
 					<td><%=aux.getTipo()%></td>
 					<td><%=aux.getEstado()%></td>
 					<td><button class="btn btn-sm btn-warning btn-detalle"
-							data-solicitud='<%=solicitudJSONstr%>'>
+							data-solicitud='<%=mapper.writeValueAsString(aux)%>'>
 							<i class="fas fa-info-circle"></i> Ver Detalle
 						</button>
 				</tr>
