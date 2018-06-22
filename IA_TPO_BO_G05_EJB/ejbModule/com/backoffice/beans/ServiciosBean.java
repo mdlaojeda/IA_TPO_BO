@@ -26,7 +26,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
     @SuppressWarnings("unchecked")
 	public List<ServicioDTO> getAll() {
     	List<ServicioDTO> resultado = new ArrayList<>();
-        Query query = em.createQuery("SELECT object(s) FROM ServicioEntity s");
+        Query query = em.createQuery("SELECT object(s) FROM ServicioEntity s ORDER BY s.tipoServicio.descripcion ASC, s.descripcion ASC");
         List<ServicioEntity> lista = query.getResultList();
 
         for (ServicioEntity entity : lista) {

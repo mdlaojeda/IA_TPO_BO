@@ -39,6 +39,7 @@
 			});				
 		}
 		const editarServicio = () => {
+			currentServicio['descripcion'] = $modalDetalle.find('#editDescripcion').val();
 			currentServicio['tipoServicio'] = JSON.stringify($modalDetalle.find('#editTipoServicio option:selected').data('tipo'));
 			$.post('ActionServlet?action=EditarServicio', currentServicio, page => {
 				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
