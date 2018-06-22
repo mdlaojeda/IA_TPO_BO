@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
 	<a class="navbar-brand d-flex align-items-center" href="#">
-		<i class="fas fa-hotel mr-4"></i> BO - Oferta Hotelera
+		<i class="fas fa-hotel mr-2"></i> <span class="brand-text">Back Office Tools</span>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
@@ -27,7 +27,7 @@
 				aria-expanded="false">Servicios</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item ajax-link"
-						href="ActionServlet?action=VerTiposDeServicios">Ver Tipos de Servicios</a>
+						href="ActionServlet?action=VerTiposDeServicio">Ver Tipos de Servicios</a>
 					<div class="dropdown-divider"></div> 
 					<a class="dropdown-item ajax-link"
 						href="ActionServlet?action=VerServicios">Ver Servicios</a>

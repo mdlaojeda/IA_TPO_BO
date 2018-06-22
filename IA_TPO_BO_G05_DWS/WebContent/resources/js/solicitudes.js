@@ -29,14 +29,14 @@
 		
 		const aprobarSolicitud = () => {
 			$.post('ActionServlet?action=AprobarSolicitud', currentSolicitud, page => {
-				$modalDespachar.one('hidden.bs.modal', () => $main.html(page));
-				$modalDespachar.modal('hide');
+				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
+				$modalDetalle.modal('hide');
 			});				
 		}
 		const desaprobarSolicitud = () => {
 			$.post('ActionServlet?action=DesaprobarSolicitud', currentSolicitud, page => {
-				$modalDespachar.one('hidden.bs.modal', () => $main.html(page));
-				$modalDespachar.modal('hide');
+				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
+				$modalDetalle.modal('hide');
 			});				
 		}	
 		

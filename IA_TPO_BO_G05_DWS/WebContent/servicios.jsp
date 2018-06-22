@@ -7,7 +7,9 @@
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 
 <article class="container grid col-12 col-md-10 mt-2">
-	<h1>Listado de Servicios</h1><button id="nuevoServicio" type="button" class="btn btn-warning"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+	<div class="d-inline-flex row"><h1 class="mr-2">Listado de Servicios</h1>
+	<button id="nuevoServicio" type="button" class="btn btn-warning m-2"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+	</div>
 	<section class="row col-12 seleccionar-articulos mt-4 mb-4">
 		<table class="table table-striped table-light text-dark">
 			<thead class="thead-dark">
@@ -59,12 +61,12 @@
 				<form>
 					<div class="form-row">
 						<div class="col-md-4 mb-2">
-							<label for="idSolicitud">ID</label> <input readonly type="text"
-								class="form-control" id="idSolicitud" placeholder="ID" value="" />
+							<label for="nroServicio">NRO</label> <input readonly type="text"
+								class="form-control" id="nroServicio" placeholder="Nro. Servicio" value="" />
 						</div>
 						<div class="col-md-8 mb-2">
-							<label for="codEntidad">C&oacute;digo</label> <input readonly type="text"
-								class="form-control" id="codEntidad" placeholder="Código"
+							<label for="descripcion">Descripci&oacute;n</label> <input type="text"
+								class="form-control" id="descripcion" placeholder="Descripción"
 								value="" />
 						</div>
 					</div>

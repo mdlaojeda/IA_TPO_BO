@@ -16,6 +16,7 @@
 	href="${pageContext.request.contextPath}/resources/css/all.css"></link>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/styles.css"></link>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/all.js"></script>
 </head>
