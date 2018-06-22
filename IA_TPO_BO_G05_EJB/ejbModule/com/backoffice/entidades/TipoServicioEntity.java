@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.backoffice.dto.TipoServicioDTO;
+
 @Entity
 @Table(name = "TiposServicio")
 public class TipoServicioEntity {
@@ -20,6 +22,11 @@ public class TipoServicioEntity {
 	private String descripcion;
 	
 	public TipoServicioEntity() {}
+
+	public TipoServicioEntity(TipoServicioDTO tipoServicio) {
+		this.nroTipoServicio = tipoServicio.getNroTipoServicio();
+		this.descripcion = tipoServicio.getDescripcion();
+	}
 
 	public Integer getNroTipoServicio() {
 		return nroTipoServicio;

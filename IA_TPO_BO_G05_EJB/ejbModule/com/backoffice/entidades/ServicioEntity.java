@@ -1,5 +1,7 @@
 package com.backoffice.entidades;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.backoffice.dto.ServicioDTO;
+import com.backoffice.dto.SolicitudDTO;
+import com.backoffice.enums.Estado;
 
 
 @Entity
@@ -27,6 +33,12 @@ public class ServicioEntity {
 	private String descripcion;
 	
 	public ServicioEntity() {}
+	
+	public ServicioEntity(ServicioDTO sDTO) {
+		this.nroServicio = sDTO.getNroServicio();
+		this.tipoServicio = new TipoServicioEntity(sDTO.getTipoServicio());
+		this.descripcion = sDTO.getDescripcion();
+	};
 
 	public Integer getNroServicio() {
 		return nroServicio;

@@ -46,5 +46,28 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 
         return new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO);
     }
-
+	
+	public String crearServicio(ServicioDTO sDTO) {
+		ServicioEntity entity = new ServicioEntity(sDTO);
+		if (entity != null) {
+			em.persist(entity);
+			em.flush();
+			return "Servicio creado con éxito";
+		} else {
+			return "Error al crear el Servicio";
+		}
+	}
+	public String editarServicio(ServicioDTO sDTO) {
+		ServicioEntity entity = new ServicioEntity(sDTO);
+		if (entity != null) {
+			em.merge(entity);
+			em.flush();
+			return "Servicio editado con éxito";
+		} else {
+			return "Error al editar el Servicio";
+		}
+	}
+	public String borrarServicio(Integer nroServicio) {
+		return "borrar";
+	}
 }

@@ -37,12 +37,12 @@ public class ActionServlet extends HttpServlet {
 	@EJB
     private LogsBeanRemote logsBean;
 	
-	//private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		//objectMapper = new ObjectMapper();
+		objectMapper = new ObjectMapper();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,22 +53,53 @@ public class ActionServlet extends HttpServlet {
 		final String action = request.getParameter("action");
 		String jspPage = "/404.jsp";
 		
-		if (action.isEmpty()) {
-			
-		} else if (action.equals("VerSolicitudes")) {
-			jspPage = verSolicitudes(request, response);	
-		} else if (action.equals("AprobarSolicitud")) {
-			solicitudesBean.aprobar(Integer.valueOf(request.getParameter("idSolicitud")));
-			jspPage = verSolicitudes(request, response);
-		} else if (action.equals("DesaprobarSolicitud")) {
-			solicitudesBean.desaprobar(Integer.valueOf(request.getParameter("idSolicitud")));
-			jspPage = verSolicitudes(request, response);
-		} else if (action.equals("VerServicios")) {
-			jspPage = verServicios(request, response);
-		} else if (action.equals("VerTiposDeServicio")) {
-			jspPage = verTiposServicio(request, response);
-		} else if (action.equals("VerLogs")) {
-			jspPage = verLogs(request, response);
+		if (!action.isEmpty()) {
+			if (action.equals("VerSolicitudes")) {
+				jspPage = verSolicitudes(request, response);	
+			} else if (action.equals("AprobarSolicitud")) {
+				solicitudesBean.aprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				jspPage = verSolicitudes(request, response);
+			} else if (action.equals("DesaprobarSolicitud")) {
+				solicitudesBean.desaprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				jspPage = verSolicitudes(request, response);
+			} else if (action.equals("VerServicios")) {
+				jspPage = verServicios(request, response);
+			} else if (action.equals("AgregarServicio")) {
+				ServicioDTO sDTO = new ServicioDTO();
+				sDTO.setDescripcion(request.getParameter("descripcion"));
+				TipoServicioDTO tsDTO = (TipoServicioDTO) objectMapper.readValue(request.getParameter("tipoServicio"), TipoServicioDTO.class);
+				sDTO.setTipoServicio(tsDTO);
+				serviciosBean.crearServicio(sDTO);
+				jspPage = verServicios(request, response);
+			} else if (action.equals("EditarServicio")) {
+				ServicioDTO sDTO = new ServicioDTO();
+				sDTO.setNroServicio(Integer.valueOf(request.getParameter("nroServicio")));
+				sDTO.setDescripcion(request.getParameter("descripcion"));
+				TipoServicioDTO tsDTO = (TipoServicioDTO) objectMapper.readValue(request.getParameter("tipoServicio"), TipoServicioDTO.class);
+				sDTO.setTipoServicio(tsDTO);
+				serviciosBean.editarServicio(sDTO);
+				jspPage = verServicios(request, response);
+			} else if (action.equals("BorrarServicio")) {
+				serviciosBean.borrarServicio(Integer.valueOf(request.getParameter("nroServicio")));
+				jspPage = verServicios(request, response);
+			} else if (action.equals("VerTiposDeServicio")) {
+				jspPage = verTiposServicio(request, response);
+			} else if (action.equals("AgregarTipoDeServicio")) {
+				
+				jspPage = verTiposServicio(request, response);
+			} else if (action.equals("EditarTipoDeServicio")) {
+				
+				jspPage = verTiposServicio(request, response);
+			} else if (action.equals("BorrarTipoDeServicio")) {
+				tiposServicioBean.borrarTipoDeServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));
+				jspPage = verTiposServicio(request, response);
+			} else if (action.equals("VerLogs")) {
+				jspPage = verLogs(request, response);
+			} else if (action.equals("EditarLog")) {
+				jspPage = verLogs(request, response);
+			} else if (action.equals("BorrarLog")) {
+				jspPage = verLogs(request, response);
+			}
 		}
 		
 		dispatch(jspPage, request, response);

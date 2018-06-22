@@ -26,17 +26,21 @@
 			currentServicio = servicio;
 			$modalDetalle.find('#editNroServicio').val(`${currentServicio.nroServicio}`);
 			$modalDetalle.find('#editDescripcion').val(`${currentServicio.descripcion}`);
-			$modalDetalle.find(`#editTipo option[value="${currentServicio.tipoServicio.nroTipoServicio}"]`).attr('selected', 'selected');
+			$modalDetalle.find(`#editTipoServicio option[value="${currentServicio.tipoServicio.nroTipoServicio}"]`).attr('selected', 'selected');
 		}
 		
 		const agregarServicio = () => {
-			$.post('ActionServlet?action=AgregarServicio', currentSolicitud, page => {
+			let servicio = {};
+			servicio['descripcion'] = $modalNuevoServicio.find('#descripcion').val();
+			servicio['tipoServicio'] = JSON.stringify($modalNuevoServicio.find('#tipoServicio option:selected').data('tipo'));
+			$.post('ActionServlet?action=AgregarServicio', servicio, page => {
 				$modalNuevoServicio.one('hidden.bs.modal', () => $main.html(page));
 				$modalNuevoServicio.modal('hide');
 			});				
 		}
 		const editarServicio = () => {
-			$.post('ActionServlet?action=EditarServicio', currentSolicitud, page => {
+			currentServicio['tipoServicio'] = JSON.stringify($modalDetalle.find('#editTipoServicio option:selected').data('tipo'));
+			$.post('ActionServlet?action=EditarServicio', currentServicio, page => {
 				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
 				$modalDetalle.modal('hide');
 			});				

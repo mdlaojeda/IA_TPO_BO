@@ -36,5 +36,30 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
 
         return resultado;
     }
+    
+	public String crearTipoDeServicio(TipoServicioDTO tsDTO) {
+		TipoServicioEntity entity = new TipoServicioEntity(tsDTO);
+		if (entity != null) {
+			em.persist(entity);
+			em.flush();
+			return "Tipo de Servicio creado con éxito";
+		} else {
+			return "Error al crear el Tipo de Servicio";
+		}
+	}
+	public String editarTipoDeServicio(TipoServicioDTO tsDTO) {
+		TipoServicioEntity entity = new TipoServicioEntity(tsDTO);
+		if (entity != null) {
+			em.merge(entity);
+			em.flush();
+			return "Tipo de Servicio editado con éxito";
+		} else {
+			return "Error al editar el Tipo de Servicio";
+		}
+	}
+	
+	public String borrarTipoDeServicio(Integer nroTipoServicio) {
+		return "borrar";
+	}
 
 }

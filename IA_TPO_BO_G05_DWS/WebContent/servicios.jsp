@@ -70,20 +70,20 @@
 						</div>
 						<div class="col-md-8 mb-2">
 							<label for="descripcion">Descripci&oacute;n</label> <input type="text"
-								class="form-control" id="editDescripcion" placeholder="Descripción"
+								class="form-control" id="editDescripcion" placeholder="Ingrese descripción..."
 								value="" />
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="col-md-12 mb-3">
 							 <div class="form-group">
-							    <label for="editTipo">Tipo de Servicio</label>
-							    <select class="form-control" id="editTipo">
+							    <label for="editTipoServicio">Tipo de Servicio</label>
+							    <select class="form-control" id="editTipoServicio">
 							    <%
 								for (Iterator<TipoServicioDTO> i = tsDTOlist.iterator(); i.hasNext();) {
 									tsaux = i.next();
 							    %>
-							      <option value="<%=tsaux.getNroTipoServicio()%>"><%=tsaux.getDescripcion()%></option>
+							      <option value="<%=tsaux.getNroTipoServicio()%>" data-tipo='<%= mapper.writeValueAsString(tsaux)%>'><%=tsaux.getDescripcion()%></option>
 								<%
 									}
 								%>
@@ -117,7 +117,7 @@
 					<div class="form-row">
 						<div class="col-md-12 mb-2">
 							<label for="descripcion">Descripci&oacute;n</label> <input type="text"
-								class="form-control" id="descripcion" placeholder="Descripción"
+								class="form-control" id="descripcion" placeholder="Ingrese descripción..."
 								value="" />
 						</div>
 					</div>
@@ -130,7 +130,7 @@
 								for (Iterator<TipoServicioDTO> i = tsDTOlist.iterator(); i.hasNext();) {
 									tsaux = i.next();
 							    %>
-							      <option value="<%=tsaux.getNroTipoServicio()%>"><%=tsaux.getDescripcion()%></option>
+							      <option value="<%=tsaux.getNroTipoServicio()%>" data-tipo='<%= mapper.writeValueAsString(tsaux)%>'><%=tsaux.getDescripcion()%></option>
 								<%
 									}
 								%>
