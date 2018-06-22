@@ -16,7 +16,7 @@ import com.backoffice.entidades.ServicioEntity;
 
 @Stateless
 @LocalBean
-public class ServiciosBean {
+public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
@@ -46,6 +46,5 @@ public class ServiciosBean {
 
         return new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO);
     }
-
 
 }

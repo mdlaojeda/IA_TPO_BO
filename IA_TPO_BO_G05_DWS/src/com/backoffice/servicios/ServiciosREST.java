@@ -6,8 +6,6 @@ import javax.ws.rs.*;
 
 import com.backoffice.dto.*;
 import com.backoffice.fachada.FachadaBeanRemote;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

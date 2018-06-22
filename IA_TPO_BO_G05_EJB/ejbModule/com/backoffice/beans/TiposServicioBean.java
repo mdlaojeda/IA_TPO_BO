@@ -9,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.TipoServicioDTO;
-import com.backoffice.entidades.ServicioEntity;
 import com.backoffice.entidades.TipoServicioEntity;
 
 /**
@@ -19,7 +17,7 @@ import com.backoffice.entidades.TipoServicioEntity;
  */
 @Stateless
 @LocalBean
-public class TiposServicioBean {
+public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicioBeanLocal{
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;

@@ -36,7 +36,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 	@SuppressWarnings("unchecked")
 	public List<SolicitudDTO> getAll() {
 		List<SolicitudDTO> resultado = new ArrayList<>();
-		Query query = em.createQuery("SELECT object(s) FROM Solicitudes s");
+		Query query = em.createQuery("SELECT object(s) FROM SolicitudEntity s");
 		List<SolicitudEntity> lista = query.getResultList();
 
 		for (SolicitudEntity entity : lista) {
@@ -80,16 +80,20 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 	
 	public void aprobar(int idSolicitud) {
 		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
-		entity.setEstado(Estado.APROBADA);
-		em.merge(entity);
-		em.flush();
+		if (entity != null) {
+			entity.setEstado(Estado.APROBADA);
+			em.merge(entity);
+			em.flush();	
+		}
 	}
 
 	public void desaprobar(int idSolicitud) {
 		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
-		entity.setEstado(Estado.DESAPROBADA);
-		em.merge(entity);
-		em.flush();
+		if (entity != null) {
+			entity.setEstado(Estado.DESAPROBADA);
+			em.merge(entity);
+			em.flush();	
+		}
 	}
 
 }

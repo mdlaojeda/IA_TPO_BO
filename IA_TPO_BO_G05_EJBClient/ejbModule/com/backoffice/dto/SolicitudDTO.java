@@ -8,7 +8,7 @@ import com.backoffice.enums.TipoSolicitud;
 public class SolicitudDTO implements Serializable {
 
 	private static final long serialVersionUID = -246243060543224762L;
-	
+
 	private Integer idSolicitud;
 	private String codEntidad;
 	private String nombre;

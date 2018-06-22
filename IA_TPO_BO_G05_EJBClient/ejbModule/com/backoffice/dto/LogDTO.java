@@ -1,16 +1,18 @@
 package com.backoffice.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LogDTO {
+public class LogDTO implements Serializable {
+
+	private static final long serialVersionUID = 8265711221664960733L;
+	
 	private Integer nroLog;
 	private Date fecha;
 	private String modulo;
 	private String accion;
 	
-	public LogDTO() {
-		
-	}
+	public LogDTO() {}
 	
 	public LogDTO(Integer nroLog, Date fecha, String mod, String acc) {
 		this.nroLog = nroLog;
