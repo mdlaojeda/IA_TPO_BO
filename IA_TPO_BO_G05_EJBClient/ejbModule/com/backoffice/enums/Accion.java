@@ -1,0 +1,5 @@
+package com.backoffice.enums;
+
+public enum Accion {
+	NINGUNA, ALTA, NUEVA_OFERTA, RESERVA, APROBAR_SOLICITUD, DESAPROBAR_SOLICITUD, ALTA_SERVICIO
+}

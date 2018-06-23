@@ -21,7 +21,7 @@
 	src="${pageContext.request.contextPath}/resources/js/all.js"></script>
 </head>
 
-<body class="bg-light text-dark">
+<body class="bg-striped text-dark">
 	<header class="header">
 		<%@include file="header.jsp"%>
 	</header>
@@ -30,9 +30,10 @@
 		<h1 class="text-center">Administraci&oacute;n Back Office de Oferta Hotelera</h1>
 	</section>
 
-	<footer class="footer hidden-sm-down">
+	<footer class="footer hidden-sm-down bg-white">
 		<div class="container-fluid">
-			<p>2018<sup>&reg;</sup> - <span class="materia">Integración de Aplicaciones</span> - Bajo, Gargiulo, Mlot, Ojeda, Pablos</p>
+			<span class="apellidos">Bajo, Gargiulo, Mlot, Ojeda, Pablos</span> - 
+			<span class="">1ºC 2018 TN<sup>&reg;</sup> - <span class="materia">Integración de Aplicaciones</span></span>
 		</div>
 	</footer>
 	<div class="loading-overlay">

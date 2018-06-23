@@ -15,8 +15,8 @@
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Tipo</th>
 					<th scope="col">Servicio</th>
+					<th scope="col">Tipo</th>
 					<th scope="col">Acciones</th>
 				</tr>
 			</thead>
@@ -32,14 +32,18 @@
 					for (Iterator<ServicioDTO> i = sDTOlist.iterator(); i.hasNext();) {
 						aux = i.next();
 				%>
-				<tr class="pedido-row">
+				<tr>
 					<th scope="row"><%=aux.getNroServicio()%></th>
+					<td><b><%=aux.getDescripcion()%></b></td>
 					<td><%=aux.getTipoServicio().getDescripcion()%></td>
-					<td><%=aux.getDescripcion()%></td>
 					<td><button class="btn btn-sm btn-warning btn-detalle"
 							data-servicio='<%=mapper.writeValueAsString(aux)%>'>
 							<i class="fas fa-edit"></i> Editar
 						</button>
+						<button class="btn btn-sm btn-danger btn-borrar"
+							data-nroservicio="<%=aux.getNroServicio()%>">
+							<i class="fas fa-trash-alt"></i> Borrar
+						</button></td>
 				</tr>
 				<%
 					}

@@ -3,6 +3,7 @@
 		const $main = $('#main').removeClass('modal-body');
 		const $btnNuevoServicio = $('#btnNuevoServicio');
 		const $btnDetalle = $('.btn-detalle');
+		const $btnBorrar = $('.btn-borrar');
 		const $modalNuevoServicio = $('#modalNuevoServicio');
 		const $modalDetalle = $('#modalDetalle');
 		const $btnAgregarServicio = $('#btnAgregarServicio');
@@ -45,13 +46,21 @@
 				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
 				$modalDetalle.modal('hide');
 			});				
-		}	
+		}
+		const borrarServicio = (ev) => {
+			debugger;
+			const nroServicio = $(ev.target).data('nroservicio');
+			$.post('ActionServlet?action=BorrarServicio', {"nroServicio": `${nroServicio}`}, page => {
+				$main.html(page);
+			});				
+		}
 		
 		const doBindings = () => {
 			$btnNuevoServicio.click(mostrarNuevoServicio);
 			$btnDetalle.click(mostrarDetalle);
 			$btnAgregarServicio.click(agregarServicio);
 			$btnEditarServicio.click(editarServicio);
+			$btnBorrar.click(borrarServicio);
 		}
 		
 		doBindings();

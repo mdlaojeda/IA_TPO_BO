@@ -27,10 +27,10 @@
 				aria-expanded="false">Servicios</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item ajax-link"
-						href="ActionServlet?action=VerTiposDeServicio">Ver Tipos de Servicios</a>
+						href="ActionServlet?action=VerServicios">Ver Servicios</a>
 					<div class="dropdown-divider"></div> 
 					<a class="dropdown-item ajax-link"
-						href="ActionServlet?action=VerServicios">Ver Servicios</a>
+						href="ActionServlet?action=VerTiposDeServicio">Ver Tipos de Servicios</a>
 				</div></li>
 
 			<li class="nav-item dropdown"><a

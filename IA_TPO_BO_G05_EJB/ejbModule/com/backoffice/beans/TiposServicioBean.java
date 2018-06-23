@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.backoffice.dto.TipoServicioDTO;
+import com.backoffice.entidades.ServicioEntity;
 import com.backoffice.entidades.TipoServicioEntity;
 
 /**
@@ -27,7 +28,7 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
     @SuppressWarnings("unchecked")
 	public List<TipoServicioDTO> getAll() {
     	List<TipoServicioDTO> resultado = new ArrayList<>();
-        Query query = em.createQuery("SELECT object(s) FROM TipoServicioEntity s");
+        Query query = em.createQuery("SELECT object(s) FROM TipoServicioEntity s ORDER BY s.descripcion ASC");
         List<TipoServicioEntity> lista = query.getResultList();
 
         for (TipoServicioEntity entity : lista){
@@ -59,6 +60,9 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
 	}
 	
 	public String borrarTipoDeServicio(Integer nroTipoServicio) {
+		TipoServicioEntity entity = em.find(TipoServicioEntity.class, nroTipoServicio);
+	    em.remove(entity);
+	    em.flush();
 		return "borrar";
 	}
 

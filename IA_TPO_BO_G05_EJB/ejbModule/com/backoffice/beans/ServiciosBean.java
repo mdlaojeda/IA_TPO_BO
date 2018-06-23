@@ -67,7 +67,10 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 			return "Error al editar el Servicio";
 		}
 	}
-	public String borrarServicio(Integer nroServicio) {
+	public String borrarServicio(Integer nroServicio) {	
+		ServicioEntity entity = em.find(ServicioEntity.class, nroServicio);
+	    em.remove(entity);
+	    em.flush();
 		return "borrar";
 	}
 }

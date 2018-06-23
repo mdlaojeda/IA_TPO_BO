@@ -85,10 +85,15 @@ public class ActionServlet extends HttpServlet {
 			} else if (action.equals("VerTiposDeServicio")) {
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("AgregarTipoDeServicio")) {
-				
+				TipoServicioDTO tsDTO = new TipoServicioDTO();
+				tsDTO.setDescripcion(request.getParameter("descripcion"));
+				tiposServicioBean.crearTipoDeServicio(tsDTO);
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("EditarTipoDeServicio")) {
-				
+				TipoServicioDTO tsDTO = new TipoServicioDTO();
+				tsDTO.setNroTipoServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));	
+				tsDTO.setDescripcion(request.getParameter("descripcion"));
+				tiposServicioBean.editarTipoDeServicio(tsDTO);
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("BorrarTipoDeServicio")) {
 				tiposServicioBean.borrarTipoDeServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));
