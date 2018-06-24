@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
+public class UtilsBean implements UtilsBeanRemote {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;

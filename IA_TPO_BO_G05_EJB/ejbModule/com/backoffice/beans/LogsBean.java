@@ -17,7 +17,7 @@ import com.backoffice.excepciones.LogException;
 
 @Stateless
 @LocalBean
-public class LogsBean implements LogsBeanRemote, LogsBeanLocal {
+public class LogsBean implements LogsBeanRemote {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
@@ -54,7 +54,6 @@ public class LogsBean implements LogsBeanRemote, LogsBeanLocal {
 			resultado = stringBuilder.toString();
 		} catch (Exception e) {
 			throw new LogException("Error al ingresar el log: " + e.getMessage());
-			//resultado = "Error al ingresar el log: " + e.getMessage();
 		}
 		return resultado;
 	}
@@ -68,6 +67,15 @@ public class LogsBean implements LogsBeanRemote, LogsBeanLocal {
 			throw new LogException("Error al borrar el log: " + e.getMessage());
 		}
 		return "Log " + entity.getNroLog() + " borrado.";
+	}
+	
+	public String borrarLogs() throws LogException {	
+		try {
+			em.createQuery("DELETE FROM LogEntity").executeUpdate();
+		} catch (Exception e) {
+			throw new LogException("Error al borrar los logs: " + e.getMessage());
+		}
+		return "Log borrados";
 	}
 
 }

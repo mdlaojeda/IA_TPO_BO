@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.backoffice.dto.TipoServicioDTO;
-import com.backoffice.entidades.ServicioEntity;
 import com.backoffice.entidades.TipoServicioEntity;
 import com.backoffice.excepciones.TipoServicioException;
 
@@ -19,7 +18,7 @@ import com.backoffice.excepciones.TipoServicioException;
  */
 @Stateless
 @LocalBean
-public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicioBeanLocal{
+public class TiposServicioBean implements TiposServicioBeanRemote {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;

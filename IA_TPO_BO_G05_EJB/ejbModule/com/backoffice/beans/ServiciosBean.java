@@ -11,14 +11,12 @@ import javax.persistence.Query;
 
 import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.TipoServicioDTO;
-
 import com.backoffice.entidades.ServicioEntity;
-import com.backoffice.excepciones.LogException;
 import com.backoffice.excepciones.ServicioException;
 
 @Stateless
 @LocalBean
-public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
+public class ServiciosBean implements ServiciosBeanRemote {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
@@ -36,7 +34,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
             resultado.add(new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO));
         }
         if (resultado.isEmpty()) {
-        	throw new ServicioException("No se encontraron Servicios.");
+        	throw new ServicioException("No se encontraron Servicios");
         }
         return resultado;
     }
@@ -48,7 +46,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 			entity = (ServicioEntity) em.createQuery("SELECT object(s) FROM ServicioEntity s WHERE s.nroServicio = :nroServicio").setParameter("nroServicio", nroServicio).getSingleResult();
 			tipoServDTO = new TipoServicioDTO(entity.getTipoServicio().getNroTipoServicio(), entity.getTipoServicio().getDescripcion());
 		} catch (Exception e) {
-			throw new ServicioException("No se encontraron Servicios.");
+			throw new ServicioException("No se encontraron Servicios");
 		}
         
         return new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO);
@@ -56,28 +54,32 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 	
 	public String crearServicio(ServicioDTO sDTO) throws ServicioException {
 		ServicioEntity entity = new ServicioEntity(sDTO);
-		if (entity != null) {
+		try {
 			em.persist(entity);
 			em.flush();
-			return "Servicio creado con éxito";
-		} else {
-			return "Error al crear el Servicio";
+		} catch (Exception e) {
+			throw new ServicioException("Error al crear el Servicio");
 		}
+		return "Servicio creado con éxito";
 	}
 	public String editarServicio(ServicioDTO sDTO) throws ServicioException {
 		ServicioEntity entity = new ServicioEntity(sDTO);
-		if (entity != null) {
+		try {
 			em.merge(entity);
 			em.flush();
-			return "Servicio editado con éxito";
-		} else {
-			return "Error al editar el Servicio";
+		} catch (Exception e) {
+			throw new ServicioException("Error al modificar el Servicio");
 		}
+		return "Servicio actualizado con éxito";
 	}
-	public String borrarServicio(Integer nroServicio) throws ServicioException {	
-		ServicioEntity entity = em.find(ServicioEntity.class, nroServicio);
-	    em.remove(entity);
-	    em.flush();
-		return "borrar";
+	public String borrarServicio(Integer nroServicio) throws ServicioException {
+		try {
+			ServicioEntity entity = em.find(ServicioEntity.class, nroServicio);
+		    em.remove(entity);
+		    em.flush();
+		} catch (Exception e) {
+			throw new ServicioException("Error al borrar el Servicio");
+		}
+		return "Servicio borrado con éxito";
 	}
 }

@@ -6,9 +6,11 @@
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 
 <article class="container grid col-12 col-md-10 mt-2">
-	<h1>Listado de Solicitudes</h1>
+	<div class="d-flex row col-12"><h1>Listado de Solicitudes</h1>
+	<button id="btnLimpiarSolicitudes" type="button" class="btn btn-danger ml-auto"><i class="fas fa-trash-alt"></i> Limpiar Solicitudes</button>
+	</div>
 	<section class="row col-12 seleccionar-articulos mt-4 mb-4">
-		<table class="table table-striped table-light text-dark">
+		<table class="table table-striped table-light text-dark table-sm">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
@@ -25,10 +27,10 @@
 					for (Iterator<SolicitudDTO> i = sDTOlist.iterator(); i.hasNext();) {
 						aux = i.next();
 				%>
-				<tr class="pedido-row">
+				<tr class="tr--<%=aux.getEstado().toString().toLowerCase()%>">
 					<th scope="row"><%=aux.getIdSolicitud()%></th>
 					<td><%=aux.getTipo()%></td>
-					<td><%=aux.getEstado()%></td>
+					<td><span class="medalla-estado"><%=aux.getEstado()%></span></td>
 					<td><button class="btn btn-sm btn-warning btn-detalle"
 							data-solicitud='<%=mapper.writeValueAsString(aux)%>'>
 							<i class="fas fa-info-circle"></i> Ver Detalle

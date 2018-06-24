@@ -16,7 +16,7 @@ import com.backoffice.excepciones.SolicitudException;
 
 @Stateless
 @LocalBean
-public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLocal {
+public class SolicitudesBean implements SolicitudesBeanRemote {
 
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
@@ -95,6 +95,15 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 			em.merge(entity);
 			em.flush();	
 		}
+	}
+	
+	public String borrarSolicitudes() throws SolicitudException {	
+		try {
+			em.createQuery("DELETE FROM SolicitudEntity").executeUpdate();
+		} catch (Exception e) {
+			throw new SolicitudException("Error al borrar las solicitudes: " + e.getMessage());
+		}
+		return "Solicitudes borradas";
 	}
 
 }

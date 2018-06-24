@@ -7,7 +7,9 @@
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 
 <article class="container grid col-12 col-md-10 mt-2">
-	<h1>Reporte de Logs</h1>
+	<div class="d-flex row col-12"><h1>Reporte de Logs</h1>
+	<button id="btnLimpiarLogs" type="button" class="btn btn-danger ml-auto"><i class="fas fa-trash-alt"></i> Limpiar Logs</button>
+	</div>
 	<section class="row col-12 seleccionar-articulos mt-4 mb-4">
 		<table class="table table-striped table-light text-dark table-sm">
 			<thead class="thead-dark">

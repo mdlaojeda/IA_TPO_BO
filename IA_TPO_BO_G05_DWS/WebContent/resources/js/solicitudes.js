@@ -5,6 +5,7 @@
 		const $modalDetalle = $('#modalDetalle');
 		const $aprobarSolicitud = $('#aprobarSolicitud');
 		const $desaprobarSolicitud = $('#desaprobarSolicitud');
+		const $btnLimpiarSolicitudes = $('#btnLimpiarSolicitudes');
 		let currentSolicitud = '';
 		
 		const mostrarDetalle = (ev) => {
@@ -38,9 +39,16 @@
 				$modalDetalle.one('hidden.bs.modal', () => $main.html(page));
 				$modalDetalle.modal('hide');
 			});				
-		}	
+		}
+		
+		const limpiarSolicitudes = (ev) => {
+			$.post('ActionServlet?action=LimpiarSolicitudes', {}, page => {
+				$main.html(page);
+			});				
+		}
 		
 		const doBindings = () => {
+			$btnLimpiarSolicitudes.click(limpiarSolicitudes);
 			$btnDetalle.click(mostrarDetalle);
 			$aprobarSolicitud.click(aprobarSolicitud);
 			$desaprobarSolicitud.click(desaprobarSolicitud);

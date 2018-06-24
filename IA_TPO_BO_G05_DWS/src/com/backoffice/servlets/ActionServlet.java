@@ -76,6 +76,14 @@ public class ActionServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				jspPage = verSolicitudes(request, response);
+			} else if (action.equals("LimpiarSolicitudes")) {
+				try {
+					solicitudesBean.borrarSolicitudes();
+				} catch (NumberFormatException | SolicitudException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				jspPage = verSolicitudes(request, response);
 			} else if (action.equals("VerServicios")) {
 				jspPage = verServicios(request, response);
 			} else if (action.equals("AgregarServicio")) {
@@ -147,6 +155,14 @@ public class ActionServlet extends HttpServlet {
 			} else if (action.equals("BorrarLog")) {
 				try {
 					logsBean.borrar(Integer.valueOf(request.getParameter("nroLog")));
+				} catch (NumberFormatException | LogException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				jspPage = verLogs(request, response);
+			} else if (action.equals("LimpiarLogs")) {
+				try {
+					logsBean.borrarLogs();
 				} catch (NumberFormatException | LogException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

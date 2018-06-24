@@ -7,11 +7,11 @@
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 
 <article class="container grid col-12 col-md-10 mt-2">
-	<div class="d-inline-flex row"><h1 class="mr-2">Listado de Servicios</h1>
-	<button id="btnNuevoServicio" type="button" class="btn btn-warning m-2"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+	<div class="d-flex row col-12"><h1>Listado de Servicios</h1>
+	<button id="btnNuevoServicio" type="button" class="btn btn-warning ml-auto"><i class="fas fa-plus"></i> Agregar Nuevo</button>
 	</div>
 	<section class="row col-12 seleccionar-articulos mt-4 mb-4">
-		<table class="table table-striped table-light text-dark">
+		<table class="table table-striped table-light text-dark table-sm">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
