@@ -13,6 +13,8 @@ import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.TipoServicioDTO;
 
 import com.backoffice.entidades.ServicioEntity;
+import com.backoffice.excepciones.LogException;
+import com.backoffice.excepciones.ServicioException;
 
 @Stateless
 @LocalBean
@@ -24,7 +26,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
     public ServiciosBean() {}
     
     @SuppressWarnings("unchecked")
-	public List<ServicioDTO> getAll() {
+	public List<ServicioDTO> getAll() throws ServicioException {
     	List<ServicioDTO> resultado = new ArrayList<>();
         Query query = em.createQuery("SELECT object(s) FROM ServicioEntity s ORDER BY s.tipoServicio.descripcion ASC, s.descripcion ASC");
         List<ServicioEntity> lista = query.getResultList();
@@ -33,21 +35,26 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
         	TipoServicioDTO tipoServDTO = new TipoServicioDTO(entity.getTipoServicio().getNroTipoServicio(), entity.getTipoServicio().getDescripcion());
             resultado.add(new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO));
         }
-
+        if (resultado.isEmpty()) {
+        	throw new ServicioException("No se encontraron Servicios.");
+        }
         return resultado;
     }
     
-	public ServicioDTO getById(Integer nroServicio) {
-        Query query = em.createQuery("SELECT object(s) FROM ServicioEntity s WHERE s.nroServicio = :nroServicio");
-        query.setParameter("nroServicio", nroServicio);
-        ServicioEntity entity = (ServicioEntity) query.getSingleResult();
+	public ServicioDTO getById(Integer nroServicio) throws ServicioException {
+		ServicioEntity entity = new ServicioEntity();
+		TipoServicioDTO tipoServDTO = new TipoServicioDTO();
+		try {
+			entity = (ServicioEntity) em.createQuery("SELECT object(s) FROM ServicioEntity s WHERE s.nroServicio = :nroServicio").setParameter("nroServicio", nroServicio).getSingleResult();
+			tipoServDTO = new TipoServicioDTO(entity.getTipoServicio().getNroTipoServicio(), entity.getTipoServicio().getDescripcion());
+		} catch (Exception e) {
+			throw new ServicioException("No se encontraron Servicios.");
+		}
         
-        TipoServicioDTO tipoServDTO = new TipoServicioDTO(entity.getTipoServicio().getNroTipoServicio(), entity.getTipoServicio().getDescripcion());
-
         return new ServicioDTO(entity.getNroServicio(), entity.getDescripcion(), tipoServDTO);
     }
 	
-	public String crearServicio(ServicioDTO sDTO) {
+	public String crearServicio(ServicioDTO sDTO) throws ServicioException {
 		ServicioEntity entity = new ServicioEntity(sDTO);
 		if (entity != null) {
 			em.persist(entity);
@@ -57,7 +64,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 			return "Error al crear el Servicio";
 		}
 	}
-	public String editarServicio(ServicioDTO sDTO) {
+	public String editarServicio(ServicioDTO sDTO) throws ServicioException {
 		ServicioEntity entity = new ServicioEntity(sDTO);
 		if (entity != null) {
 			em.merge(entity);
@@ -67,7 +74,7 @@ public class ServiciosBean implements ServiciosBeanRemote, ServiciosBeanLocal {
 			return "Error al editar el Servicio";
 		}
 	}
-	public String borrarServicio(Integer nroServicio) {	
+	public String borrarServicio(Integer nroServicio) throws ServicioException {	
 		ServicioEntity entity = em.find(ServicioEntity.class, nroServicio);
 	    em.remove(entity);
 	    em.flush();

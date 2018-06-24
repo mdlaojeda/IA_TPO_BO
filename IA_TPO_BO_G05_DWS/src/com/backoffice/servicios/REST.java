@@ -5,6 +5,10 @@ import javax.ejb.Stateless;
 import javax.ws.rs.*;
 
 import com.backoffice.dto.*;
+import com.backoffice.excepciones.LogException;
+import com.backoffice.excepciones.ServicioException;
+import com.backoffice.excepciones.SolicitudException;
+import com.backoffice.excepciones.TipoServicioException;
 import com.backoffice.fachada.FachadaBeanRemote;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -15,7 +19,7 @@ import java.util.List;
 
 @Stateless
 @Path("/")
-public class ServiciosREST {
+public class REST {
     
 	@EJB
     private FachadaBeanRemote fachadaBean;
@@ -25,7 +29,7 @@ public class ServiciosREST {
 	@Path("/solicitudes")
 	@Consumes({ "application/json" })
 	@Produces({ "text/plain" })
-	public String enviarSolicitud(String solicitudReq) {
+	public String enviarSolicitud(String solicitudReq) throws SolicitudException {
 		
     	SolicitudDTO solicitudDTO = new SolicitudDTO();
     	ObjectMapper objectMapper = new ObjectMapper();
@@ -42,7 +46,7 @@ public class ServiciosREST {
     @GET
     @Path("/servicios/all")
     @Produces({ "application/json" })
-    public List<ServicioDTO> obtenerServicios() {
+    public List<ServicioDTO> obtenerServicios() throws ServicioException {
     	return fachadaBean.obtenerServicios();
     }
     
@@ -50,7 +54,7 @@ public class ServiciosREST {
 	@GET
     @Path("/servicios")
     @Produces({ "application/json" })
-    public ArrayNode obtenerServiciosPorTipo() {
+    public ArrayNode obtenerServiciosPorTipo() throws ServicioException, TipoServicioException {
     	
     	List<ServicioDTO> servicios = fachadaBean.obtenerServicios();
     	List<TipoServicioDTO> tiposServicio = fachadaBean.obtenerTiposServicio();
@@ -86,7 +90,7 @@ public class ServiciosREST {
     @Path("/logs")
     @Consumes({ "application/json" })
     @Produces({ "text/plain" })
-    public String enviarLog(String logreq) {
+    public String enviarLog(String logreq) throws LogException {
     	
     	LogDTO lDTO = new LogDTO();
     	try {

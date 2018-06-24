@@ -8,9 +8,10 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlElement;
 
-import com.backoffice.beans.SolicitudesBean;
+import com.backoffice.beans.SolicitudesBeanRemote;
 import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.enums.Estado;
+import com.backoffice.excepciones.SolicitudException;
 
 @Stateless
 @WebService
@@ -18,7 +19,7 @@ import com.backoffice.enums.Estado;
 public class SOAP {
     
 	@EJB
-    private SolicitudesBean solicitudesBean;
+    private SolicitudesBeanRemote solicitudesBean;
 	
     @WebMethod
     public boolean estaAutorizado(
@@ -28,7 +29,11 @@ public class SOAP {
     	SolicitudDTO dto = null;
     	
     	if (codEntidad != null){
-    		dto = solicitudesBean.buscarPorUUID(codEntidad);
+    		try {
+				dto = solicitudesBean.buscarPorUUID(codEntidad);
+			} catch (SolicitudException e) {
+				e.printStackTrace();
+			}
     	}
     	
     	if(dto != null && dto.getEstado().equals(Estado.APROBADA)) {
@@ -37,5 +42,4 @@ public class SOAP {
     		return false;
     	}
     }
-
 }

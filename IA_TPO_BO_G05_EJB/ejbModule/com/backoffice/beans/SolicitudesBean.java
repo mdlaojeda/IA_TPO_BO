@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.entidades.SolicitudEntity;
 import com.backoffice.enums.Estado;
+import com.backoffice.excepciones.SolicitudException;
 
 @Stateless
 @LocalBean
@@ -20,7 +21,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 	@PersistenceContext(unitName = "TPO_IA")
 	private EntityManager em;
 
-	public SolicitudDTO crearSolicitud(SolicitudDTO sDTO) {
+	public SolicitudDTO crearSolicitud(SolicitudDTO sDTO) throws SolicitudException {
 		try {
 			SolicitudEntity entity = new SolicitudEntity(sDTO);
 			em.persist(entity);
@@ -34,7 +35,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SolicitudDTO> getAll() {
+	public List<SolicitudDTO> getAll() throws SolicitudException {
 		List<SolicitudDTO> resultado = new ArrayList<>();
 		Query query = em.createQuery("SELECT object(s) FROM SolicitudEntity s");
 		List<SolicitudEntity> lista = query.getResultList();
@@ -47,7 +48,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 		return resultado;
 	}
 
-	public SolicitudDTO buscarPorNro(int idSolicitud) {
+	public SolicitudDTO buscarPorNro(int idSolicitud) throws SolicitudException {
 		try {
 			SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
 			if (entity != null) {
@@ -61,7 +62,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 		return null;
 	}
 
-	public SolicitudDTO buscarPorUUID(String codEntidad) {
+	public SolicitudDTO buscarPorUUID(String codEntidad) throws SolicitudException {
 		try {
 			
 			SolicitudEntity entity = (SolicitudEntity) em.createQuery("FROM SolicitudEntity s WHERE s.codEntidad = :cod")
@@ -78,7 +79,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 		return null;
 	}
 	
-	public void aprobar(int idSolicitud) {
+	public void aprobar(int idSolicitud) throws SolicitudException {
 		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
 		if (entity != null) {
 			entity.setEstado(Estado.APROBADA);
@@ -87,7 +88,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote, SolicitudesBeanLo
 		}
 	}
 
-	public void desaprobar(int idSolicitud) {
+	public void desaprobar(int idSolicitud) throws SolicitudException {
 		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
 		if (entity != null) {
 			entity.setEstado(Estado.DESAPROBADA);

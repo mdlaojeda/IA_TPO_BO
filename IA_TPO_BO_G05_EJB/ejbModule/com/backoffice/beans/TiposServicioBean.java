@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import com.backoffice.dto.TipoServicioDTO;
 import com.backoffice.entidades.ServicioEntity;
 import com.backoffice.entidades.TipoServicioEntity;
+import com.backoffice.excepciones.TipoServicioException;
 
 /**
  * Session Bean implementation class TiposServicioBean
@@ -26,7 +27,7 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
     public TiposServicioBean() {}
     
     @SuppressWarnings("unchecked")
-	public List<TipoServicioDTO> getAll() {
+	public List<TipoServicioDTO> getAll() throws TipoServicioException {
     	List<TipoServicioDTO> resultado = new ArrayList<>();
         Query query = em.createQuery("SELECT object(s) FROM TipoServicioEntity s ORDER BY s.descripcion ASC");
         List<TipoServicioEntity> lista = query.getResultList();
@@ -38,7 +39,7 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
         return resultado;
     }
     
-	public String crearTipoDeServicio(TipoServicioDTO tsDTO) {
+	public String crearTipoDeServicio(TipoServicioDTO tsDTO) throws TipoServicioException {
 		TipoServicioEntity entity = new TipoServicioEntity(tsDTO);
 		if (entity != null) {
 			em.persist(entity);
@@ -48,7 +49,7 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
 			return "Error al crear el Tipo de Servicio";
 		}
 	}
-	public String editarTipoDeServicio(TipoServicioDTO tsDTO) {
+	public String editarTipoDeServicio(TipoServicioDTO tsDTO) throws TipoServicioException {
 		TipoServicioEntity entity = new TipoServicioEntity(tsDTO);
 		if (entity != null) {
 			em.merge(entity);
@@ -59,7 +60,7 @@ public class TiposServicioBean implements TiposServicioBeanRemote, TiposServicio
 		}
 	}
 	
-	public String borrarTipoDeServicio(Integer nroTipoServicio) {
+	public String borrarTipoDeServicio(Integer nroTipoServicio) throws TipoServicioException {
 		TipoServicioEntity entity = em.find(TipoServicioEntity.class, nroTipoServicio);
 	    em.remove(entity);
 	    em.flush();

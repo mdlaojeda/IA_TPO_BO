@@ -32,7 +32,7 @@
 					<td><button class="btn btn-sm btn-warning btn-detalle"
 							data-solicitud='<%=mapper.writeValueAsString(aux)%>'>
 							<i class="fas fa-info-circle"></i> Ver Detalle
-						</button>
+						</button></td>
 				</tr>
 				<%
 					}
@@ -56,11 +56,11 @@
 			<div class="modal-body">
 				<form>
 					<div class="form-row">
-						<div class="col-md-4 mb-2">
+						<div class="col-md-2 mb-2">
 							<label for="idSolicitud">ID</label> <input readonly type="text"
 								class="form-control" id="idSolicitud" placeholder="ID" value="" />
 						</div>
-						<div class="col-md-8 mb-2">
+						<div class="col-md-10 mb-2">
 							<label for="codEntidad">C&oacute;digo</label> <input readonly type="text"
 								class="form-control" id="codEntidad" placeholder="Código"
 								value="" />

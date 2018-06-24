@@ -1,5 +1,6 @@
 package com.backoffice.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class ServicioEntity {
 	@Column(name = "nroServicio")
 	private Integer nroServicio;
 	
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "nroTipoServicio", nullable = false)
 	private TipoServicioEntity tipoServicio;
 	

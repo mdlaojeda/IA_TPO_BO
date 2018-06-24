@@ -32,8 +32,8 @@
 
 	<footer class="footer hidden-sm-down bg-white">
 		<div class="container-fluid">
-			<span class="apellidos">Bajo, Gargiulo, Mlot, Ojeda, Pablos</span> - 
-			<span class="">1ºC 2018 TN<sup>&reg;</sup> - <span class="materia">Integración de Aplicaciones</span></span>
+			<span class="apellidos">Bajo, Gargiulo, Mlot, Ojeda, Pablos<sup>&reg;</sup></span> - 
+			<span class="">1ºC 2018 TN - <span class="materia">Integración de Aplicaciones</span></span>
 		</div>
 	</footer>
 	<div class="loading-overlay">

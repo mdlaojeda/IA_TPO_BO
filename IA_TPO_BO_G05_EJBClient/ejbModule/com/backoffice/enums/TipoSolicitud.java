@@ -1,5 +1,5 @@
 package com.backoffice.enums;
 
 public enum TipoSolicitud {
-	ESTABLECIMIENTO, AGENCIA
+	NEUTRAL, ESTABLECIMIENTO, AGENCIA
 }

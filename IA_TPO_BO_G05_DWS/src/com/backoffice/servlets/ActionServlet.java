@@ -18,6 +18,10 @@ import com.backoffice.dto.LogDTO;
 import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.dto.TipoServicioDTO;
+import com.backoffice.excepciones.LogException;
+import com.backoffice.excepciones.ServicioException;
+import com.backoffice.excepciones.SolicitudException;
+import com.backoffice.excepciones.TipoServicioException;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -57,10 +61,20 @@ public class ActionServlet extends HttpServlet {
 			if (action.equals("VerSolicitudes")) {
 				jspPage = verSolicitudes(request, response);	
 			} else if (action.equals("AprobarSolicitud")) {
-				solicitudesBean.aprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				try {
+					solicitudesBean.aprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				} catch (NumberFormatException | SolicitudException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verSolicitudes(request, response);
 			} else if (action.equals("DesaprobarSolicitud")) {
-				solicitudesBean.desaprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				try {
+					solicitudesBean.desaprobar(Integer.valueOf(request.getParameter("idSolicitud")));
+				} catch (NumberFormatException | SolicitudException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verSolicitudes(request, response);
 			} else if (action.equals("VerServicios")) {
 				jspPage = verServicios(request, response);
@@ -69,7 +83,12 @@ public class ActionServlet extends HttpServlet {
 				sDTO.setDescripcion(request.getParameter("descripcion"));
 				TipoServicioDTO tsDTO = (TipoServicioDTO) objectMapper.readValue(request.getParameter("tipoServicio"), TipoServicioDTO.class);
 				sDTO.setTipoServicio(tsDTO);
-				serviciosBean.crearServicio(sDTO);
+				try {
+					serviciosBean.crearServicio(sDTO);
+				} catch (ServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verServicios(request, response);
 			} else if (action.equals("EditarServicio")) {
 				ServicioDTO sDTO = new ServicioDTO();
@@ -77,32 +96,61 @@ public class ActionServlet extends HttpServlet {
 				sDTO.setDescripcion(request.getParameter("descripcion"));
 				TipoServicioDTO tsDTO = (TipoServicioDTO) objectMapper.readValue(request.getParameter("tipoServicio"), TipoServicioDTO.class);
 				sDTO.setTipoServicio(tsDTO);
-				serviciosBean.editarServicio(sDTO);
+				try {
+					serviciosBean.editarServicio(sDTO);
+				} catch (ServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verServicios(request, response);
 			} else if (action.equals("BorrarServicio")) {
-				serviciosBean.borrarServicio(Integer.valueOf(request.getParameter("nroServicio")));
+				try {
+					serviciosBean.borrarServicio(Integer.valueOf(request.getParameter("nroServicio")));
+				} catch (NumberFormatException | ServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verServicios(request, response);
 			} else if (action.equals("VerTiposDeServicio")) {
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("AgregarTipoDeServicio")) {
 				TipoServicioDTO tsDTO = new TipoServicioDTO();
 				tsDTO.setDescripcion(request.getParameter("descripcion"));
-				tiposServicioBean.crearTipoDeServicio(tsDTO);
+				try {
+					tiposServicioBean.crearTipoDeServicio(tsDTO);
+				} catch (TipoServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("EditarTipoDeServicio")) {
 				TipoServicioDTO tsDTO = new TipoServicioDTO();
 				tsDTO.setNroTipoServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));	
 				tsDTO.setDescripcion(request.getParameter("descripcion"));
-				tiposServicioBean.editarTipoDeServicio(tsDTO);
+				try {
+					tiposServicioBean.editarTipoDeServicio(tsDTO);
+				} catch (TipoServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("BorrarTipoDeServicio")) {
-				tiposServicioBean.borrarTipoDeServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));
+				try {
+					tiposServicioBean.borrarTipoDeServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));
+				} catch (NumberFormatException | TipoServicioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verTiposServicio(request, response);
 			} else if (action.equals("VerLogs")) {
 				jspPage = verLogs(request, response);
-			} else if (action.equals("EditarLog")) {
-				jspPage = verLogs(request, response);
 			} else if (action.equals("BorrarLog")) {
+				try {
+					logsBean.borrar(Integer.valueOf(request.getParameter("nroLog")));
+				} catch (NumberFormatException | LogException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				jspPage = verLogs(request, response);
 			}
 		}
@@ -122,7 +170,12 @@ public class ActionServlet extends HttpServlet {
 	
 	private String verSolicitudes (HttpServletRequest request, HttpServletResponse response) {
 		List<SolicitudDTO> solicitudes = new ArrayList<>();
-		solicitudes = solicitudesBean.getAll();
+		try {
+			solicitudes = solicitudesBean.getAll();
+		} catch (SolicitudException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	request.setAttribute("solicitudes", solicitudes);
     	return "/solicitudes.jsp";
 	}
@@ -130,8 +183,18 @@ public class ActionServlet extends HttpServlet {
 	private String verServicios (HttpServletRequest request, HttpServletResponse response) {
 		List<ServicioDTO> servicios = new ArrayList<>();
 		List<TipoServicioDTO> tiposservicio = new ArrayList<>();
-		servicios = serviciosBean.getAll();
-		tiposservicio = tiposServicioBean.getAll();
+		try {
+			servicios = serviciosBean.getAll();
+		} catch (ServicioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			tiposservicio = tiposServicioBean.getAll();
+		} catch (TipoServicioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	request.setAttribute("servicios", servicios);
     	request.setAttribute("tiposservicio", tiposservicio);
     	return "/servicios.jsp";
@@ -139,14 +202,24 @@ public class ActionServlet extends HttpServlet {
 	
 	private String verTiposServicio (HttpServletRequest request, HttpServletResponse response) {
 		List<TipoServicioDTO> tiposservicio = new ArrayList<>();
-		tiposservicio = tiposServicioBean.getAll();
+		try {
+			tiposservicio = tiposServicioBean.getAll();
+		} catch (TipoServicioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	request.setAttribute("tiposservicio", tiposservicio);
     	return "/tiposservicio.jsp";
 	}
 	
 	private String verLogs (HttpServletRequest request, HttpServletResponse response) {
 		List<LogDTO> logs = new ArrayList<>();
-		logs = logsBean.getAll();
+		try {
+			logs = logsBean.getAll();
+		} catch (LogException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	request.setAttribute("logs", logs);
     	return "/logs.jsp";
 	}
