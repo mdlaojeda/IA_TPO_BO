@@ -26,13 +26,17 @@ public class LogsBean implements LogsBeanRemote {
 	public List<LogDTO> getAll() throws LogException {
     	List<LogDTO> resultado = new ArrayList<>();
         Query query = em.createQuery("SELECT object(l) FROM LogEntity l");
-        List<LogEntity> lista = query.getResultList();
-        for (LogEntity entity : lista){
-            resultado.add(new LogDTO(entity.getNroLog(), entity.getFecha(), entity.getModulo(), entity.getAccion()));
-        }
-        
-        if (resultado.isEmpty()) {
-        	throw new LogException("No se encontraron resultados.");
+        try {
+	        List<LogEntity> lista = query.getResultList();
+	        for (LogEntity entity : lista){
+	            resultado.add(new LogDTO(entity.getNroLog(), entity.getFecha(), entity.getModulo(), entity.getAccion()));
+	        }
+	        
+	        if (resultado.isEmpty()) {
+	        	// throw new LogException("No se encontraron resultados.");
+	        }
+        } catch (Exception e) {
+        	throw new LogException("Error al traer los logs.");
         }
         
         return resultado;

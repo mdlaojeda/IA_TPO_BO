@@ -18,7 +18,7 @@ import com.backoffice.excepciones.TipoServicioException;
  */
 @Stateless
 @LocalBean
-public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
+public class FachadaBean implements FachadaBeanRemote {
 	
 	@EJB
 	SolicitudesBean solicitudesBean = new SolicitudesBean();
@@ -31,9 +31,6 @@ public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
 	
 	@EJB
 	TiposServicioBean tiposServicioBean = new TiposServicioBean();
-	
-	@EJB
-	UtilsBean utilsBean = new UtilsBean();
 	
     public FachadaBean() {
         // TODO Auto-generated constructor stub
@@ -60,11 +57,6 @@ public class FachadaBean implements FachadaBeanRemote, FachadaBeanLocal {
     //-------- Logs --------//
 	public String enviarLog(LogDTO lDTO) throws LogException {
 		return logsBean.crearLog(lDTO);
-	}
-	
-	//-------- Utils --------//
-	public String reset() {
-		return utilsBean.reset();
 	}
 
 }

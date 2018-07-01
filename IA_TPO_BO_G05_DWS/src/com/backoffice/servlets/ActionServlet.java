@@ -2,6 +2,7 @@ package com.backoffice.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,8 @@ import com.backoffice.dto.LogDTO;
 import com.backoffice.dto.ServicioDTO;
 import com.backoffice.dto.SolicitudDTO;
 import com.backoffice.dto.TipoServicioDTO;
+import com.backoffice.enums.Accion;
+import com.backoffice.enums.Modulo;
 import com.backoffice.excepciones.LogException;
 import com.backoffice.excepciones.ServicioException;
 import com.backoffice.excepciones.SolicitudException;
@@ -64,7 +67,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					solicitudesBean.aprobar(Integer.valueOf(request.getParameter("idSolicitud")));
 				} catch (NumberFormatException | SolicitudException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verSolicitudes(request, response);
@@ -72,15 +74,14 @@ public class ActionServlet extends HttpServlet {
 				try {
 					solicitudesBean.desaprobar(Integer.valueOf(request.getParameter("idSolicitud")));
 				} catch (NumberFormatException | SolicitudException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verSolicitudes(request, response);
 			} else if (action.equals("LimpiarSolicitudes")) {
 				try {
 					solicitudesBean.borrarSolicitudes();
-				} catch (NumberFormatException | SolicitudException e) {
-					// TODO Auto-generated catch block
+					logsBean.crearLog(new LogDTO(null, new Date(), Modulo.BACK_OFFICE, Accion.LIMPIEZA_SOLICITUDES));
+				} catch (NumberFormatException | SolicitudException | LogException e) {
 					e.printStackTrace();
 				}
 				jspPage = verSolicitudes(request, response);
@@ -94,7 +95,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					serviciosBean.crearServicio(sDTO);
 				} catch (ServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verServicios(request, response);
@@ -107,7 +107,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					serviciosBean.editarServicio(sDTO);
 				} catch (ServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verServicios(request, response);
@@ -115,7 +114,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					serviciosBean.borrarServicio(Integer.valueOf(request.getParameter("nroServicio")));
 				} catch (NumberFormatException | ServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verServicios(request, response);
@@ -127,7 +125,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					tiposServicioBean.crearTipoDeServicio(tsDTO);
 				} catch (TipoServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verTiposServicio(request, response);
@@ -138,7 +135,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					tiposServicioBean.editarTipoDeServicio(tsDTO);
 				} catch (TipoServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verTiposServicio(request, response);
@@ -146,7 +142,6 @@ public class ActionServlet extends HttpServlet {
 				try {
 					tiposServicioBean.borrarTipoDeServicio(Integer.valueOf(request.getParameter("nroTipoServicio")));
 				} catch (NumberFormatException | TipoServicioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verTiposServicio(request, response);
@@ -156,15 +151,14 @@ public class ActionServlet extends HttpServlet {
 				try {
 					logsBean.borrar(Integer.valueOf(request.getParameter("nroLog")));
 				} catch (NumberFormatException | LogException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verLogs(request, response);
 			} else if (action.equals("LimpiarLogs")) {
 				try {
 					logsBean.borrarLogs();
+					logsBean.crearLog(new LogDTO(null, new Date(), Modulo.BACK_OFFICE, Accion.LIMPIEZA_LOGS));
 				} catch (NumberFormatException | LogException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jspPage = verLogs(request, response);
@@ -189,7 +183,6 @@ public class ActionServlet extends HttpServlet {
 		try {
 			solicitudes = solicitudesBean.getAll();
 		} catch (SolicitudException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	request.setAttribute("solicitudes", solicitudes);
@@ -202,13 +195,11 @@ public class ActionServlet extends HttpServlet {
 		try {
 			servicios = serviciosBean.getAll();
 		} catch (ServicioException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			tiposservicio = tiposServicioBean.getAll();
 		} catch (TipoServicioException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	request.setAttribute("servicios", servicios);
@@ -221,7 +212,6 @@ public class ActionServlet extends HttpServlet {
 		try {
 			tiposservicio = tiposServicioBean.getAll();
 		} catch (TipoServicioException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	request.setAttribute("tiposservicio", tiposservicio);
@@ -233,7 +223,6 @@ public class ActionServlet extends HttpServlet {
 		try {
 			logs = logsBean.getAll();
 		} catch (LogException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	request.setAttribute("logs", logs);

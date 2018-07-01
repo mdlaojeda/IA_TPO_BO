@@ -23,5 +23,14 @@
 		}
 		
 		doBindings();
+		
+		/*
+		setTimeout(()=>{
+			$.post('ActionServlet?action=VerLogs', {}, page => {
+				$main.html(page);
+			});	
+		}, 5000);
+		*/
+		
 	});
 })();

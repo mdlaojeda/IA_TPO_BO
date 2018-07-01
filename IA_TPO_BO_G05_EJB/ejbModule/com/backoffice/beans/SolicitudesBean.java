@@ -22,29 +22,32 @@ public class SolicitudesBean implements SolicitudesBeanRemote {
 	private EntityManager em;
 
 	public SolicitudDTO crearSolicitud(SolicitudDTO sDTO) throws SolicitudException {
+		SolicitudEntity entity = new SolicitudEntity(sDTO);
 		try {
-			SolicitudEntity entity = new SolicitudEntity(sDTO);
 			em.persist(entity);
 			em.flush();
-			return new SolicitudDTO(entity.getIdSolicitud(), entity.getCodEntidad(), entity.getNombre(),
-					entity.getDireccion(), entity.getEstado(), entity.getTipo());
 		} catch (Exception e) {
-
+			throw new SolicitudException("Error al crear la solicitud: " + e.getMessage());
 		}
-		return null;
+		return new SolicitudDTO(entity.getIdSolicitud(), entity.getCodEntidad(), entity.getNombre(),
+				entity.getDireccion(), entity.getEstado(), entity.getTipo());
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<SolicitudDTO> getAll() throws SolicitudException {
 		List<SolicitudDTO> resultado = new ArrayList<>();
 		Query query = em.createQuery("SELECT object(s) FROM SolicitudEntity s");
-		List<SolicitudEntity> lista = query.getResultList();
-
-		for (SolicitudEntity entity : lista) {
-			resultado.add(new SolicitudDTO(entity.getIdSolicitud(), entity.getCodEntidad(), entity.getNombre(),
-					entity.getDireccion(), entity.getEstado(), entity.getTipo()));
+		try {
+			List<SolicitudEntity> lista = query.getResultList();
+	
+			for (SolicitudEntity entity : lista) {
+				resultado.add(new SolicitudDTO(entity.getIdSolicitud(), entity.getCodEntidad(), entity.getNombre(),
+						entity.getDireccion(), entity.getEstado(), entity.getTipo()));
+			}
+			
+		} catch (Exception e) {
+			throw new SolicitudException("Error al listar las solicitudes: " + e.getMessage());
 		}
-
 		return resultado;
 	}
 
@@ -57,7 +60,7 @@ public class SolicitudesBean implements SolicitudesBeanRemote {
 			}
 
 		} catch (Exception e) {
-
+			throw new SolicitudException("Error al buscar la solicitud " + String.valueOf(idSolicitud) + ": " + e.getMessage());
 		}
 		return null;
 	}
@@ -74,26 +77,34 @@ public class SolicitudesBean implements SolicitudesBeanRemote {
 			}
 
 		} catch (Exception e) {
-
+			throw new SolicitudException("Error al buscar la solicitud " + codEntidad + ": " + e.getMessage());
 		}
 		return null;
 	}
 	
 	public void aprobar(int idSolicitud) throws SolicitudException {
-		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
-		if (entity != null) {
-			entity.setEstado(Estado.APROBADA);
-			em.merge(entity);
-			em.flush();	
+		try {
+			SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
+			if (entity != null) {
+				entity.setEstado(Estado.APROBADA);
+				em.merge(entity);
+				em.flush();	
+			}
+		} catch (Exception e) {
+			throw new SolicitudException("Error al aprobar la solicitud " + String.valueOf(idSolicitud) + ": " + e.getMessage());
 		}
 	}
 
 	public void desaprobar(int idSolicitud) throws SolicitudException {
-		SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
-		if (entity != null) {
-			entity.setEstado(Estado.DESAPROBADA);
-			em.merge(entity);
-			em.flush();	
+		try {
+			SolicitudEntity entity = em.find(SolicitudEntity.class, idSolicitud);
+			if (entity != null) {
+				entity.setEstado(Estado.DESAPROBADA);
+				em.merge(entity);
+				em.flush();	
+			}
+		} catch (Exception e) {
+			throw new SolicitudException("Error al desaprobar la solicitud " + String.valueOf(idSolicitud) + ": " + e.getMessage());
 		}
 	}
 	

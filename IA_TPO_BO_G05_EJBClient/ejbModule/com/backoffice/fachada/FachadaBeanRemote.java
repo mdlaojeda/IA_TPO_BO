@@ -24,8 +24,5 @@ public interface FachadaBeanRemote {
 	
 	//-------- Logs --------//
 	public String enviarLog(LogDTO lDTO) throws LogException;
-	
-	//-------- Utils --------//
-	public String reset();
 
 }

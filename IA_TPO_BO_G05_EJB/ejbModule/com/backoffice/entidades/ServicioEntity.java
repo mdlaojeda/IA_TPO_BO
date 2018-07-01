@@ -22,7 +22,7 @@ public class ServicioEntity {
 	@Column(name = "nroServicio")
 	private Integer nroServicio;
 	
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "nroTipoServicio", nullable = false)
 	private TipoServicioEntity tipoServicio;
 	
