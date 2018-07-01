@@ -108,13 +108,12 @@ public class SolicitudesBean implements SolicitudesBeanRemote {
 		}
 	}
 	
-	public String borrarSolicitudes() throws SolicitudException {	
+	public void borrarSolicitudes() throws SolicitudException {	
 		try {
 			em.createQuery("DELETE FROM SolicitudEntity").executeUpdate();
 		} catch (Exception e) {
 			throw new SolicitudException("Error al borrar las solicitudes: " + e.getMessage());
 		}
-		return "Solicitudes borradas";
 	}
 
 }

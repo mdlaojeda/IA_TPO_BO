@@ -1,8 +1,6 @@
 package com.backoffice.beans;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -42,27 +40,17 @@ public class LogsBean implements LogsBeanRemote {
         return resultado;
     }
 
-	public String crearLog(LogDTO logDTO) throws LogException {
-		String resultado;
+	public void crearLog(LogDTO logDTO) throws LogException {
 		try {
 			LogEntity entity = new LogEntity(logDTO);
 			em.persist(entity);
 			em.flush();
-			
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append("Log '");
-			stringBuilder.append(entity.getNroLog());
-			stringBuilder.append("' ingresado a las ");
-			stringBuilder.append(new SimpleDateFormat("dd/MM/yyyy, Ka").format(new Date()));
-			stringBuilder.append(".");
-			resultado = stringBuilder.toString();
 		} catch (Exception e) {
 			throw new LogException("Error al ingresar el log: " + e.getMessage());
 		}
-		return resultado;
 	}
 	
-	public String borrar(Integer nroLog) throws LogException {	
+	public void borrar(Integer nroLog) throws LogException {	
 		LogEntity entity = em.find(LogEntity.class, nroLog);
 		try {
 		    em.remove(entity);
@@ -70,16 +58,14 @@ public class LogsBean implements LogsBeanRemote {
 		} catch (Exception e) {
 			throw new LogException("Error al borrar el log: " + e.getMessage());
 		}
-		return "Log " + entity.getNroLog() + " borrado.";
 	}
 	
-	public String borrarLogs() throws LogException {	
+	public void borrarLogs() throws LogException {	
 		try {
 			em.createQuery("DELETE FROM LogEntity").executeUpdate();
 		} catch (Exception e) {
 			throw new LogException("Error al borrar los logs: " + e.getMessage());
 		}
-		return "Log borrados";
 	}
 
 }

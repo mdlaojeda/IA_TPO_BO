@@ -3,6 +3,8 @@ package com.backoffice.servicios;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.backoffice.dto.*;
 import com.backoffice.excepciones.LogException;
@@ -15,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -29,39 +32,49 @@ public class REST {
 	@Path("/solicitudes")
 	@Consumes({ "application/json" })
 	@Produces({ "text/plain" })
-	public String enviarSolicitud(String solicitudReq) throws SolicitudException {
+	public Response enviarSolicitud(String solicitudReq) {
 		
     	SolicitudDTO solicitudDTO = new SolicitudDTO();
     	ObjectMapper objectMapper = new ObjectMapper();
+    	String codEntidad = "";
     	try {
 			solicitudDTO = objectMapper.readValue(solicitudReq, SolicitudDTO.class);
-		} catch (IOException e) {
-			e.printStackTrace();
+			codEntidad = fachadaBean.enviarSolicitud(solicitudDTO);
+		} catch (SolicitudException | IOException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 
-		return fachadaBean.enviarSolicitud(solicitudDTO);
+		return Response.ok(codEntidad, MediaType.TEXT_PLAIN).build();
 	}
 	
 	//--------- SERVICIOS ---------//
     @GET
     @Path("/servicios/all")
     @Produces({ "application/json" })
-    public List<ServicioDTO> obtenerServicios() throws ServicioException {
-    	return fachadaBean.obtenerServicios();
+    public Response obtenerServicios() {
+    	List<ServicioDTO> resp = new ArrayList<ServicioDTO>();
+    	try {
+    		resp = fachadaBean.obtenerServicios();
+    	} catch(ServicioException e) {
+    		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+    	}
+
+    	return Response.ok(resp, MediaType.APPLICATION_JSON).build();
     }
     
     @SuppressWarnings("deprecation")
 	@GET
     @Path("/servicios")
     @Produces({ "application/json" })
-    public ArrayNode obtenerServiciosPorTipo() throws ServicioException, TipoServicioException {
+    public Response obtenerServiciosPorTipo() throws ServicioException, TipoServicioException {
     	
-    	List<ServicioDTO> servicios = fachadaBean.obtenerServicios();
-    	List<TipoServicioDTO> tiposServicio = fachadaBean.obtenerTiposServicio();
-
     	ObjectMapper mapper = new ObjectMapper();
     	ArrayNode arrayRespuesta = mapper.createArrayNode();
     	
+    	try {
+    	List<ServicioDTO> servicios = fachadaBean.obtenerServicios();
+    	List<TipoServicioDTO> tiposServicio = fachadaBean.obtenerTiposServicio();
+
         for (TipoServicioDTO tsDTO : tiposServicio) {
         	ObjectNode tsObj = mapper.createObjectNode();
         	ArrayNode serviciosNode = mapper.createArrayNode();
@@ -80,8 +93,11 @@ public class REST {
         	tsObj.put("servicios", serviciosNode);
         	arrayRespuesta.add(tsObj);
         }
+    	} catch (ServicioException | TipoServicioException e) {
+    		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+    	}
         
-    	return arrayRespuesta;
+    	return Response.ok(arrayRespuesta, MediaType.APPLICATION_JSON).build();
     }
 	
 	
@@ -90,15 +106,13 @@ public class REST {
     @Path("/logs")
     @Consumes({ "application/json" })
     @Produces({ "text/plain" })
-    public String enviarLog(String logreq) throws LogException {
-    	
-    	LogDTO lDTO = new LogDTO();
+    public Response enviarLog(String logreq) {
     	try {
-    		lDTO = new ObjectMapper().readValue(logreq, LogDTO.class);
-		} catch (IOException e) {
-			e.printStackTrace();
+    		fachadaBean.enviarLog(new ObjectMapper().readValue(logreq, LogDTO.class));
+		} catch (IOException | LogException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
-		return fachadaBean.enviarLog(lDTO);
+    	return Response.ok("Log creado con éxito", MediaType.TEXT_PLAIN).build();
     }
     
 }

@@ -55,8 +55,8 @@ public class FachadaBean implements FachadaBeanRemote {
     }
 
     //-------- Logs --------//
-	public String enviarLog(LogDTO lDTO) throws LogException {
-		return logsBean.crearLog(lDTO);
+	public void enviarLog(LogDTO lDTO) throws LogException {
+		logsBean.crearLog(lDTO);
 	}
 
 }

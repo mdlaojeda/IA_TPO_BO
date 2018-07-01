@@ -23,6 +23,6 @@ public interface FachadaBeanRemote {
 	public List<TipoServicioDTO> obtenerTiposServicio() throws TipoServicioException;
 	
 	//-------- Logs --------//
-	public String enviarLog(LogDTO lDTO) throws LogException;
+	public void enviarLog(LogDTO lDTO) throws LogException;
 
 }

@@ -9,8 +9,8 @@ import com.backoffice.excepciones.LogException;
 
 @Remote
 public interface LogsBeanRemote {
-	public String crearLog(LogDTO logDTO) throws LogException;
+	public void crearLog(LogDTO logDTO) throws LogException;
 	public List<LogDTO> getAll() throws LogException;
-	public String borrar(Integer nroLog) throws LogException;
-	public String borrarLogs() throws LogException;
+	public void borrar(Integer nroLog) throws LogException;
+	public void borrarLogs() throws LogException;
 }

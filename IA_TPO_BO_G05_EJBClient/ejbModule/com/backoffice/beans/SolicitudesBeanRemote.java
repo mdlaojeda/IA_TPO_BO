@@ -15,5 +15,5 @@ public interface SolicitudesBeanRemote {
 	public SolicitudDTO buscarPorUUID(String codEntidad) throws SolicitudException;
 	public void aprobar(int idSolicitud) throws SolicitudException;
 	public void desaprobar(int idSolicitud) throws SolicitudException;
-	public String borrarSolicitudes() throws SolicitudException;
+	public void borrarSolicitudes() throws SolicitudException;
 }
