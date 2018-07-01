@@ -178,7 +178,7 @@ public class ActionServlet extends HttpServlet {
 		}
 	}
 	
-	private String verSolicitudes (HttpServletRequest request, HttpServletResponse response) {
+	private String verSolicitudes(HttpServletRequest request, HttpServletResponse response) {
 		List<SolicitudDTO> solicitudes = new ArrayList<>();
 		try {
 			solicitudes = solicitudesBean.getAll();
@@ -189,7 +189,7 @@ public class ActionServlet extends HttpServlet {
     	return "/solicitudes.jsp";
 	}
 	
-	private String verServicios (HttpServletRequest request, HttpServletResponse response) {
+	private String verServicios(HttpServletRequest request, HttpServletResponse response) {
 		List<ServicioDTO> servicios = new ArrayList<>();
 		List<TipoServicioDTO> tiposservicio = new ArrayList<>();
 		try {
@@ -207,7 +207,7 @@ public class ActionServlet extends HttpServlet {
     	return "/servicios.jsp";
 	}
 	
-	private String verTiposServicio (HttpServletRequest request, HttpServletResponse response) {
+	private String verTiposServicio(HttpServletRequest request, HttpServletResponse response) {
 		List<TipoServicioDTO> tiposservicio = new ArrayList<>();
 		try {
 			tiposservicio = tiposServicioBean.getAll();
@@ -218,7 +218,7 @@ public class ActionServlet extends HttpServlet {
     	return "/tiposservicio.jsp";
 	}
 	
-	private String verLogs (HttpServletRequest request, HttpServletResponse response) {
+	private String verLogs(HttpServletRequest request, HttpServletResponse response) {
 		List<LogDTO> logs = new ArrayList<>();
 		try {
 			logs = logsBean.getAll();
