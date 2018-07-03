@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
   <persistence> 
 	<persistence-unit name="TPO_IA" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/TPO_IA-ds</jta-data-source>
 		<properties>
 			<property name="hibernate.show_sql" value="true"/> 
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
          	<property name="hibernate.transaction.flush_before_completion" value="true"/>
 		</properties>
 	</persistence-unit> 
-
 </persistence>  

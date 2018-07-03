@@ -28,18 +28,15 @@ public class SOAP {
     	
     	SolicitudDTO dto = null;
     	
-    	if (codEntidad != null){
+    	if (codEntidad != null) {
     		try {
 				dto = solicitudesBean.buscarPorUUID(codEntidad);
 			} catch (SolicitudException e) {
 				e.printStackTrace();
+				return false;
 			}
     	}
     	
-    	if(dto != null && dto.getEstado().equals(Estado.APROBADA)) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return (dto != null && dto.getEstado().equals(Estado.APROBADA)) ? true : false;
     }
 }
